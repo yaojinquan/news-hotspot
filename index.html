@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新闻平台热点 - 社会民生分类汇总（含概要与价值评估）</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    padding: 24px;
+    line-height: 1.6;
+  }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: 24px; color: #1a1a2e; margin-bottom: 8px; }
+  .header .meta { font-size: 14px; color: #888; }
+
+  .stats {
+    display: flex; gap: 16px; justify-content: center;
+    margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .stat-card {
+    background: #fff; border-radius: 8px; padding: 12px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08); text-align: center; min-width: 140px;
+  }
+  .stat-card .num { font-size: 28px; font-weight: 700; color: #e8312f; }
+  .stat-card .label { font-size: 13px; color: #666; margin-top: 2px; }
+  .stat-card .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+  .value-summary {
+    display: flex; gap: 16px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .vs-card {
+    border-radius: 8px; padding: 10px 20px; text-align: center; min-width: 120px;
+  }
+  .vs-card .vs-num { font-size: 22px; font-weight: 700; }
+  .vs-card .vs-label { font-size: 12px; margin-top: 2px; }
+  .vs-high { background: #fff1f0; }
+  .vs-high .vs-num { color: #e8312f; }
+  .vs-low { background: #f0f5ff; }
+  .vs-low .vs-num { color: #2f54eb; }
+  .vs-mid { background: #f6ffed; }
+  .vs-mid .vs-num { color: #52c41a; }
+
+  .legend {
+    display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; font-size: 13px; color: #666;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+
+  .table-wrapper {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    overflow: hidden; overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 1500px; }
+  thead th {
+    background: #1a1a2e; color: #fff; padding: 14px 12px;
+    text-align: left; font-weight: 600; position: sticky; top: 0; z-index: 10; white-space: nowrap;
+  }
+  thead th:first-child { width: 90px; text-align: center; }
+  thead th:nth-child(2) { width: 50px; text-align: center; }
+  thead th:nth-child(3) { min-width: 280px; }
+  thead th:nth-child(4) { width: 70px; text-align: center; }
+  thead th:nth-child(5) { min-width: 340px; }
+  thead th:nth-child(6) { width: 110px; text-align: center; }
+  thead th:nth-child(7) { width: 100px; text-align: center; }
+  tbody tr { border-bottom: 1px solid #eef0f4; transition: background 0.15s; }
+  tbody tr:hover { background: #f8f9fc; }
+  tbody td { padding: 11px 12px; vertical-align: top; }
+  td.platform { font-weight: 600; border-left: 4px solid; text-align: center; white-space: nowrap; }
+  td.seq { text-align: center; color: #999; font-size: 13px; }
+  td.title a { color: #1a1a2e; text-decoration: none; }
+  td.title a:hover { color: #e8312f; text-decoration: underline; }
+  td.link-cell { text-align: center; }
+  td.link-cell a { color: #1890ff; text-decoration: none; font-size: 13px; }
+  td.link-cell a:hover { text-decoration: underline; }
+  td.summary { color: #555; line-height: 1.7; }
+  td.comment-count { text-align: center; white-space: nowrap; }
+  td.value { text-align: center; }
+
+  .section-divider td {
+    background: #1a1a2e; color: #fff; font-weight: 600;
+    padding: 10px 14px; font-size: 15px;
+  }
+
+  .cmt-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 12px; font-weight: 600;
+  }
+  .cmt-ok { background: #f6ffed; color: #52c41a; }
+  .cmt-low { background: #fff7e6; color: #fa8c16; }
+  .cmt-err { background: #fff1f0; color: #f5222d; }
+  .cmt-na { background: #f5f5f5; color: #999; }
+
+  .value-tag {
+    display: inline-block; padding: 3px 12px; border-radius: 4px;
+    font-size: 13px; font-weight: 600;
+  }
+  .value-high { background: #fff1f0; color: #e8312f; border: 1px solid #ffccc7; }
+  .value-low { background: #f0f5ff; color: #2f54eb; border: 1px solid #adc6ff; }
+  .value-mid { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
+
+  .footer { margin-top: 24px; font-size: 13px; color: #999; text-align: center; }
+  .footer p { margin-bottom: 6px; }
+  .visit-counter { margin-top: 16px; padding: 12px 20px; background: #f0f2f5; border-radius: 8px; font-size: 14px; color: #666; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>新闻平台热点 — 社会民生分类汇总</h1>
+  <div class="meta">采集时间：2026年7月28日 | 四平台 | 社会民生类 | 含内容概要与价值度评估</div>
+</div>
+
+<div class="stats">
+  <div class="stat-card"><div class="num">20</div><div class="label">网易新闻</div><div class="sub">高7 中4 低9</div></div>
+  <div class="stat-card"><div class="num">20</div><div class="label">腾讯新闻</div><div class="sub">高7 中4 低9</div></div>
+  <div class="stat-card"><div class="num">20</div><div class="label">微博热搜</div><div class="sub">高10 中6 低4</div></div>
+  <div class="stat-card"><div class="num">20</div><div class="label">今日头条</div><div class="sub">高8 中6 低6</div></div>
+</div>
+
+<div class="value-summary">
+  <div class="vs-card vs-high"><div class="vs-num">32</div><div class="vs-label">高价值</div></div>
+  <div class="vs-card vs-mid"><div class="vs-num">20</div><div class="vs-label">中性</div></div>
+  <div class="vs-card vs-low"><div class="vs-num">28</div><div class="vs-label">低价值</div></div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="value-tag value-high">高价值</span> 争议/腐败/冲突/诈骗/毁三观/家庭伦理矛盾/经济纠纷</div>
+  <div class="legend-item"><span class="value-tag value-mid">中性</span> 民生政策/健康科普/纪念活动/社会现象</div>
+  <div class="legend-item"><span class="value-tag value-low">低价值</span> 一般资讯/天气/局部灾害报道</div>
+</div>
+
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+  <th>平台来源</th>
+  <th>#</th>
+  <th>新闻标题</th>
+  <th>链接</th>
+  <th>内容概要</th>
+  <th>评论数量</th>
+  <th>价值度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="section-divider"><td colspan="7">📰 网易新闻 — 社会民生</td></tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">1</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2U06F1G0001899O.html" target="_blank">网红村支书带货"知了猴"被质疑会破坏生态</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2U06F1G0001899O.html" target="_blank">查看</a></td>
+  <td class="summary">网红村支书刘磊直播带货知了猴（金蝉），高价收购后利润返给村民，引发生态破坏争议。当事人回应称当地有'上树即不捕'传统，不会破坏环境</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">424条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">2</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2SM623E0514D3UH.html" target="_blank">女子发现网络短剧中嵌入私人住宅监控画面</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2SM623E0514D3UH.html" target="_blank">查看</a></td>
+  <td class="summary">女子在看网络短剧时，发现剧中嵌入了约20秒自己家中私人住宅的监控画面，隐私被公开传播，引发对隐私权侵害的广泛讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">3</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2TUU7N60556NLUO.html" target="_blank">养老金调整不同步，1.8亿人拿到补发职工养老金22连涨还要等多久</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2TUU7N60556NLUO.html" target="_blank">查看</a></td>
+  <td class="summary">2026年职工养老金22连涨方案落地，1.8亿退休人员已拿到补发金额，但各地调整进度不同步引发关注</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">4</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2TUQ9I10001899O.html" target="_blank">男子因太懂法被认定"涉嫌职业索赔人" 太原市监局道歉</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2TUQ9I10001899O.html" target="_blank">查看</a></td>
+  <td class="summary">太原市监局因消费者对法律条款太了解，将其认定为'涉嫌职业索赔人'拒绝处理投诉，引发'懂法反而违法'的舆论争议，市监局随后道歉</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">7280条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">5</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2TICHP40514R9OJ.html" target="_blank">公职人员被举报以2元买走价值8亿元股权 河北衡水通报</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2TICHP40514R9OJ.html" target="_blank">查看</a></td>
+  <td class="summary">河北衡水安平志臻中学创办人举报多名公职人员以2元价格侵吞价值8亿元的学校40%股权，衡水市成立联合调查组介入调查</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">14597条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">6</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2TS0H4N05561BWY.html" target="_blank">北京1+3招生暴涨60%！免中考直升高中的这波红利</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2TS0H4N05561BWY.html" target="_blank">查看</a></td>
+  <td class="summary">北京'1+3'培养实验项目招生人数暴涨60%，符合条件的学生可免中考直升高中的教育政策红利解读</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">7</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2SI922205561G0D.html" target="_blank">外卖小哥送救命药 顾客额外打赏50元后被指责"给太少"</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2SI922205561G0D.html" target="_blank">查看</a></td>
+  <td class="summary">外卖小哥深夜送救命药，顾客打赏50元后被网友指责'给太少'引发网暴，平台与网友的道德绑架引发热议</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">1422条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">8</td>
+  <td class="title"><a href="https://m.163.com/news/article/L2TPA3OG0514EGPO.html" target="_blank">315曝光漂白鸡爪涉事公司被罚1085万</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L2TPA3OG0514EGPO.html" target="_blank">查看</a></td>
+  <td class="summary">315晚会曝光的漂白鸡爪涉事公司被处以1085万元罚款，涉事企业使用化学药剂漂白鸡爪加工食品</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">30条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">9</td>
+  <td class="title"><a href="https://m.163.com/news/article/L22S7PM8053469LG.html" target="_blank">重庆彭水山体崩塌已致8人遇难</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L22S7PM8053469LG.html" target="_blank">查看</a></td>
+  <td class="summary">重庆彭水县发生山体崩塌灾害，已致8人遇难，救援工作正在进行中</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">10</td>
+  <td class="title"><a href="https://m.163.com/news/article/L22S9SSS0001899O.html" target="_blank">重庆彭水山体崩塌还有34人失联</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L22S9SSS0001899O.html" target="_blank">查看</a></td>
+  <td class="summary">重庆彭水山体崩塌事故中仍有34人失联，救援力量持续搜救，巨石阻碍增加救援难度</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">2337条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">11</td>
+  <td class="title"><a href="https://m.163.com/news/article/L231J13Q053469LG.html" target="_blank">重庆彭水山体崩塌现场巨石致救援难度大</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L231J13Q053469LG.html" target="_blank">查看</a></td>
+  <td class="summary">重庆彭水山体崩塌现场大量巨石堆积，导致大型机械无法进入，救援难度极大</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">12</td>
+  <td class="title"><a href="https://m.163.com/news/article/L225J01F0550B6IS.html" target="_blank">山西河津发生一起刑案，警方发布悬赏公告最高奖励5万元</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L225J01F0550B6IS.html" target="_blank">查看</a></td>
+  <td class="summary">山西河津市发生一起刑事案件，警方发布悬赏公告，最高奖励5万元征集线索</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">13</td>
+  <td class="title"><a href="https://m.163.com/news/article/L201S87H0550HXM1.html" target="_blank">长沙一出租屋现"垃圾山"，外卖垃圾堆满卧室</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L201S87H0550HXM1.html" target="_blank">查看</a></td>
+  <td class="summary">长沙一出租屋内堆满外卖垃圾形成'垃圾山'，租客退租后房东发现卧室满地垃圾，引发租房纠纷讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">27条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">14</td>
+  <td class="title"><a href="https://m.163.com/news/article/L1VNC4ON051492T3.html" target="_blank">月薪6万云海观察员招募活动结束</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L1VNC4ON051492T3.html" target="_blank">查看</a></td>
+  <td class="summary">月薪6万元招募云海观察员的网络热点活动结束，引发'最美工作'话题讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">15</td>
+  <td class="title"><a href="https://m.163.com/news/article/L21HCS0G0530QRMB.html" target="_blank">云南盐津一自建房垮塌 无人员伤亡</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L21HCS0G0530QRMB.html" target="_blank">查看</a></td>
+  <td class="summary">云南盐津县一栋自建房发生垮塌，所幸无人员伤亡</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">16</td>
+  <td class="title"><a href="https://m.163.com/news/article/L22G0D8G0514R9P4.html" target="_blank">国家专业队赴重庆彭水山体垮塌现场抢险救援</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L22G0D8G0514R9P4.html" target="_blank">查看</a></td>
+  <td class="summary">国家专业救援队赶赴重庆彭水山体垮塌现场开展抢险救援工作</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">17</td>
+  <td class="title"><a href="https://m.163.com/news/article/L22M5MJJ0534P59R.html" target="_blank">重庆彭水跑腿小哥自发加入"摩托车大军"运送物资</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L22M5MJJ0534P59R.html" target="_blank">查看</a></td>
+  <td class="summary">重庆彭水灾情中，当地跑腿小哥自发组织'摩托车大军'为救援现场运送物资</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">18</td>
+  <td class="title"><a href="https://m.163.com/news/article/L21Q4G5905504DOQ.html" target="_blank">12306购票，有新变化！</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L21Q4G5905504DOQ.html" target="_blank">查看</a></td>
+  <td class="summary">12306购票系统推出新功能变化，涉及火车票购买流程优化</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">19</td>
+  <td class="title"><a href="https://m.163.com/news/article/L1QV786K0550B6IS.html" target="_blank">内蒙古一民宿起名"禁止夫妻情侣入住"引热议</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L1QV786K0550B6IS.html" target="_blank">查看</a></td>
+  <td class="summary">内蒙古一民宿挂出'禁止夫妻情侣入住'标语引发热议，民宿经营者的特殊规定引起社会讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">网易新闻</td>
+  <td class="seq">20</td>
+  <td class="title"><a href="https://m.163.com/news/article/L1QO93ML0550WHYR.html" target="_blank">金饰克价年内大跌485元 买50克三金比年初少花2万元</a></td>
+  <td class="link-cell"><a href="https://m.163.com/news/article/L1QO93ML0550WHYR.html" target="_blank">查看</a></td>
+  <td class="summary">2026年黄金饰品价格年内大幅下跌485元/克，购买50克三金比年初节省约2万元</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr class="section-divider"><td colspan="7">💬 腾讯新闻 — 社会民生</td></tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">1</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A050LQ00" target="_blank">5.7级、5.8级！青海兴海县连发地震</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A050LQ00" target="_blank">查看</a></td>
+  <td class="summary">青海海南州兴海县连发5.7级和5.8级地震，震源深度10千米，西宁、兰州等多地有震感</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">2</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A02CUZ00" target="_blank">20岁女孩从18楼坠落，经医院抢救奇迹生还</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A02CUZ00" target="_blank">查看</a></td>
+  <td class="summary">20岁女孩与男友吵架后从18楼坠落，经医院抢救奇迹生还，肝脾破裂、全身多处骨折，已做两次手术</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">3</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A04F8O00" target="_blank">247986人罹难，"无泪的唐山"重生了</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A04F8O00" target="_blank">查看</a></td>
+  <td class="summary">唐山大地震50周年纪念日，1976年7.8级强震造成247986人罹难、16万人伤残，唐山在废墟上重建重生</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">4</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A02R9600" target="_blank">50年后再访唐山：经历过地震那个夜晚的人</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A02R9600" target="_blank">查看</a></td>
+  <td class="summary">唐山大地震50周年之际，回访经历过大地震的幸存者，讲述那个夜晚的记忆与50年来的心路历程</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">5</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A02TQ600" target="_blank">今天，湖北全省将收到这条短信！</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A02TQ600" target="_blank">查看</a></td>
+  <td class="summary">湖北全省将统一发送防灾减灾相关短信通知，提醒民众注意汛期安全</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">6</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A034LD00" target="_blank">LV首次回应与茉莉奶白诉讼</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A034LD00" target="_blank">查看</a></td>
+  <td class="summary">奢侈品牌LV首次公开回应与茶饮品牌茉莉奶白之间的商标诉讼纠纷</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">7</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A034LD00" target="_blank">六部门发布关于禁止涉军队退役报废装备销售活动的通告</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A034LD00" target="_blank">查看</a></td>
+  <td class="summary">六部门联合发布通告，禁止涉及军队退役报废装备的销售活动，规范退役装备处置</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">8</td>
+  <td class="title"><a href="https://new.qq.com/rain/a/20260728A02DJ200" target="_blank">河北衡水一中学创办人举报多名公职人员侵吞学校资产</a></td>
+  <td class="link-cell"><a href="https://new.qq.com/rain/a/20260728A02DJ200" target="_blank">查看</a></td>
+  <td class="summary">衡水安平志臻中学创办人韩士辉实名举报多名公职人员违规参与学校经营、以2元价格侵吞价值8亿元股权</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">9</td>
+  <td class="title"><a href="https://news.qq.com/rain/a/20260728A04HD300" target="_blank">法国下狠手，中国跨境巨头的"欧洲生死劫"</a></td>
+  <td class="link-cell"><a href="https://news.qq.com/rain/a/20260728A04HD300" target="_blank">查看</a></td>
+  <td class="summary">法国对中国跨境电商巨头出手整治，中国企业在欧洲市场面临严峻监管挑战</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">10</td>
+  <td class="title"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_8286a68165221052" target="_blank">暴雨红色预警！最新台风"白海豚"或达17级</a></td>
+  <td class="link-cell"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_8286a68165221052" target="_blank">查看</a></td>
+  <td class="summary">台风'白海豚'持续增强，或达17级超强台风级别，厦门等地发布暴雨红色预警</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">11</td>
+  <td class="title"><a href="https://new.qq.com/rain/a/20260728A02WSE00" target="_blank">守望相助是最坚固的堤坝——横州山洪灾区救援纪实</a></td>
+  <td class="link-cell"><a href="https://new.qq.com/rain/a/20260728A02WSE00" target="_blank">查看</a></td>
+  <td class="summary">广西横州山洪灾区救援纪实报道，记录军民守望相助抗洪救灾的感人故事</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">12</td>
+  <td class="title"><a href="https://new.qq.com/rain/a/20260728A02I7G00" target="_blank">让全社会创业创新环境更优——携程被罚51.79亿</a></td>
+  <td class="link-cell"><a href="https://new.qq.com/rain/a/20260728A02I7G00" target="_blank">查看</a></td>
+  <td class="summary">携程因垄断行为被处以51.79亿元天价罚单，公司发布全员信要求统一对外口径、调整经营模式</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">13</td>
+  <td class="title"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_7006a5b578731552" target="_blank">重庆彭水灾情谣言，警方通报三起典型案例</a></td>
+  <td class="link-cell"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_7006a5b578731552" target="_blank">查看</a></td>
+  <td class="summary">重庆彭水灾情期间出现网络谣言，警方通报查处三起编造传播灾情谣言的典型案例</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">14</td>
+  <td class="title"><a href="https://new.qq.com/rain/a/20260728A022IN00" target="_blank">重庆市本地资讯：彭水发现中巴车残骸</a></td>
+  <td class="link-cell"><a href="https://new.qq.com/rain/a/20260728A022IN00" target="_blank">查看</a></td>
+  <td class="summary">重庆彭水山体崩塌现场发现中巴车残骸，搜救工作持续推进</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">15</td>
+  <td class="title"><a href="https://new.qq.com/rain/a/20260728A022K600" target="_blank">昆明本地资讯：男子连吃一周菌子中毒送医</a></td>
+  <td class="link-cell"><a href="https://new.qq.com/rain/a/20260728A022K600" target="_blank">查看</a></td>
+  <td class="summary">昆明一男子连续吃一周野生菌后中毒送医救治，提醒市民注意野生菌食用安全</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">16</td>
+  <td class="title"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_9276a67da6a60652" target="_blank">推动干部转作风——大庆老旧小区改造</a></td>
+  <td class="link-cell"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_9276a67da6a60652" target="_blank">查看</a></td>
+  <td class="summary">大庆市推进老旧小区改造工程，推动干部转变工作作风</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">17</td>
+  <td class="title"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_9846a67e02052552" target="_blank">推进残疾人事业全面发展——孤独症儿童全链条</a></td>
+  <td class="link-cell"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_9846a67e02052552" target="_blank">查看</a></td>
+  <td class="summary">推进残疾人事业全面发展，关注孤独症儿童全链条康复救助体系建设</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">18</td>
+  <td class="title"><a href="https://new.qq.com/rain/a/20260728A022LN00" target="_blank">中央社会工作部召开意见学习贯彻部署推进会</a></td>
+  <td class="link-cell"><a href="https://new.qq.com/rain/a/20260728A022LN00" target="_blank">查看</a></td>
+  <td class="summary">中央社会工作部召开会议，学习贯彻相关意见精神，部署推进社会工作</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">19</td>
+  <td class="title"><a href="https://new.qq.com/rain/a/20260728A02B6100" target="_blank">新闻早餐汇 | 7月28日国内外重要资讯速览</a></td>
+  <td class="link-cell"><a href="https://new.qq.com/rain/a/20260728A02B6100" target="_blank">查看</a></td>
+  <td class="summary">7月28日国内外重要新闻资讯速览汇总</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">腾讯新闻</td>
+  <td class="seq">20</td>
+  <td class="title"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_7966a67ea8e31652" target="_blank">衡水通报公职人员被举报侵吞学校资产</a></td>
+  <td class="link-cell"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_7966a67ea8e31652" target="_blank">查看</a></td>
+  <td class="summary">衡水市联合调查组通报安平志臻中学公职人员被举报侵吞学校资产事件，已全面开展调查</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr class="section-divider"><td colspan="7">🔥 微博热搜 — 社会民生</td></tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">1</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%E9%9D%92%E6%B5%B7%E5%9C%B0%E9%9C%87" target="_blank">青海地震</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%E9%9D%92%E6%B5%B7%E5%9C%B0%E9%9C%87" target="_blank">查看</a></td>
+  <td class="summary">青海兴海县发生5.7级和5.8级地震，西宁、兰州、银川等多地网友反馈有明显震感，有网友拍到山体滑坡</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">2</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E7%BD%91%E7%BA%A2%E4%B9%A6%E8%AE%B0%E5%B8%A6%E8%B4%A7%E7%9F%A5%E4%BA%86%E7%8C%B4%E8%A2%AB%E6%8C%87%E7%A0%B4%E5%9D%8F%E7%94%9F%E6%80%81%23" target="_blank">网红书记带货知了猴被指破坏生态</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E7%BD%91%E7%BA%A2%E4%B9%A6%E8%AE%B0%E5%B8%A6%E8%B4%A7%E7%9F%A5%E4%BA%86%E7%8C%B4%E8%A2%AB%E6%8C%87%E7%A0%B4%E5%9D%8F%E7%94%9F%E6%80%81%23" target="_blank">查看</a></td>
+  <td class="summary">网红书记刘磊直播带货知了猴引发生态争议，支持者认为助农增收，反对者担心过度捕捉破坏生态平衡</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">3</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E7%B4%A7%E6%80%A5%E9%A2%84%E6%8B%A81.8%E4%BA%BF%E5%85%83%E6%94%AF%E6%8C%816%E7%9C%81%E9%98%B2%E6%B1%9B%E9%98%B2%E5%8F%B0%E9%A3%8E%23" target="_blank">紧急预拨1.8亿元支持6省防汛防台风</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E7%B4%A7%E6%80%A5%E9%A2%84%E6%8B%A81.8%E4%BA%BF%E5%85%83%E6%94%AF%E6%8C%816%E7%9C%81%E9%98%B2%E6%B1%9B%E9%98%B2%E5%8F%B0%E9%A3%8E%23" target="_blank">查看</a></td>
+  <td class="summary">财政部、应急管理部紧急预拨1.8亿元支持广东、福建等6省开展防汛防台风应急抢险救灾工作</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">4</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E8%82%A0%E7%99%8C%E6%9C%89%E4%B8%A4%E4%B8%AA%E7%89%B9%E7%82%B9%23" target="_blank">肠癌有两个特点</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E8%82%A0%E7%99%8C%E6%9C%89%E4%B8%A4%E4%B8%AA%E7%89%B9%E7%82%B9%23" target="_blank">查看</a></td>
+  <td class="summary">日本作家东野圭吾因结直肠癌去世引发关注，肠癌两个特点：发病年轻化、首次确诊即中晚期</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">5</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E7%A7%9F%E5%AE%A2%E6%9B%9D%E5%85%A8%E5%AE%B6%E6%80%BB%E7%94%9F%E7%97%85%E6%8F%AD%E5%BC%80%E5%A2%99%E5%B8%83%E5%85%A8%E5%B1%8B%E5%8F%91%E9%9C%89%23" target="_blank">租客曝全家总生病揭开墙布全屋发霉</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E7%A7%9F%E5%AE%A2%E6%9B%9D%E5%85%A8%E5%AE%B6%E6%80%BB%E7%94%9F%E7%97%85%E6%8F%AD%E5%BC%80%E5%A2%99%E5%B8%83%E5%85%A8%E5%B1%8B%E5%8F%91%E9%9C%89%23" target="_blank">查看</a></td>
+  <td class="summary">深圳租客全家反复生病，发现墙布下整面墙大面积发霉，房东拒绝退还8300元押金引发租房维权讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">6</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%E7%8E%8B%E8%99%B9%20%E6%8E%A8%E8%8D%90%E4%BF%A1" target="_blank">王虹 推荐信</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%E7%8E%8B%E8%99%B9%20%E6%8E%A8%E8%8D%90%E4%BF%A1" target="_blank">查看</a></td>
+  <td class="summary">菲尔兹奖得主王虹的出国推荐信出自大一班主任雷军老师，网传她找数院多位老师求助均遭拒绝，引发学术圈讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">7</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E6%90%BA%E7%A8%8B%E5%85%A8%E5%91%98%E4%BF%A1%E6%9B%9D%E5%85%89%23" target="_blank">携程全员信曝光</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E6%90%BA%E7%A8%8B%E5%85%A8%E5%91%98%E4%BF%A1%E6%9B%9D%E5%85%89%23" target="_blank">查看</a></td>
+  <td class="summary">携程因垄断行为被罚51.79亿元后内部全员信曝光，要求员工统一对外口径、破除'二选一'旧模式</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">8</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E8%A1%A1%E6%B0%B4%E5%B8%82%E6%88%90%E7%AB%8B%E8%81%94%E5%90%88%E8%B0%83%E6%9F%A5%E7%BB%84%23" target="_blank">衡水市成立联合调查组</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E8%A1%A1%E6%B0%B4%E5%B8%82%E6%88%90%E7%AB%8B%E8%81%94%E5%90%88%E8%B0%83%E6%9F%A5%E7%BB%84%23" target="_blank">查看</a></td>
+  <td class="summary">衡水市针对安平志臻中学创办人举报公职人员侵吞8亿学校资产事件，成立联合调查组全面调查</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">9</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%E5%85%B0%E5%B7%9E%E9%9C%87%E6%84%9F" target="_blank">兰州震感</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%E5%85%B0%E5%B7%9E%E9%9C%87%E6%84%9F" target="_blank">查看</a></td>
+  <td class="summary">青海兴海县地震后兰州网友反馈有明显震感，办公室椅子晃动，多人收到手机地震预警弹窗</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">10</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23170%E4%B8%87%E7%90%86%E8%B4%A2%E4%BA%8F166%E4%B8%87%E9%93%B6%E8%A1%8C%E8%A2%AB%E5%88%A4%E6%97%A0%E8%B4%A3%23" target="_blank">170万理财亏166万银行被判无责</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23170%E4%B8%87%E7%90%86%E8%B4%A2%E4%BA%8F166%E4%B8%87%E9%93%B6%E8%A1%8C%E8%A2%AB%E5%88%A4%E6%97%A0%E8%B4%A3%23" target="_blank">查看</a></td>
+  <td class="summary">天津银行'飞单'案：客户170万买理财亏166万，一审银行赔10%，二审改判银行无责，投资者与银行责任划分引发争议</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">11</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E6%B5%99%E6%B1%9F%E5%AE%A3%E4%BC%A0%E6%89%B9%E6%9D%8E%E6%9D%83%E5%93%B2%E9%AB%98%E9%93%81%E9%9C%B8%E5%BA%A7%23" target="_blank">浙江宣传批李权哲高铁霸座</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E6%B5%99%E6%B1%9F%E5%AE%A3%E4%BC%A0%E6%89%B9%E6%9D%8E%E6%9D%83%E5%93%B2%E9%AB%98%E9%93%81%E9%9C%B8%E5%BA%A7%23" target="_blank">查看</a></td>
+  <td class="summary">艺人李权哲高铁霸座拒不让座，助理以'只剩一站'为由要求乘客换座，浙江宣传发文批评'艺人出行讲排场是病'</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">12</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E5%94%90%E5%B1%B1%E5%A4%A7%E5%9C%B0%E9%9C%8750%E5%91%A8%E5%B9%B4%23" target="_blank">唐山大地震50周年</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E5%94%90%E5%B1%B1%E5%A4%A7%E5%9C%B0%E9%9C%8750%E5%91%A8%E5%B9%B4%23" target="_blank">查看</a></td>
+  <td class="summary">2026年7月28日是唐山大地震50周年纪念日，1976年7.8级强震造成24万同胞罹难，全国各界缅怀遇难同胞</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">13</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E9%9D%92%E6%B5%B7%E5%85%B4%E6%B5%B75.7%E7%BA%A7%E5%9C%B0%E9%9C%87%23" target="_blank">青海兴海5.7级地震</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E9%9D%92%E6%B5%B7%E5%85%B4%E6%B5%B75.7%E7%BA%A7%E5%9C%B0%E9%9C%87%23" target="_blank">查看</a></td>
+  <td class="summary">中国地震台网测定青海兴海县发生5.7级地震，震源深度10千米，18分钟后又发生5.8级地震</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">14</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E7%BD%91%E7%BA%A2%E6%99%AF%E5%8C%BA10%E4%BA%BA%E9%81%87%E9%9A%BE3%E6%AC%A1%E9%A2%84%E8%AD%A6%E4%B8%BA%E4%BD%95%E5%A4%B1%E6%95%88%23" target="_blank">网红景区10人遇难3次预警为何失效</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E7%BD%91%E7%BA%A2%E6%99%AF%E5%8C%BA10%E4%BA%BA%E9%81%87%E9%9A%BE3%E6%AC%A1%E9%A2%84%E8%AD%A6%E4%B8%BA%E4%BD%95%E5%A4%B1%E6%95%88%23" target="_blank">查看</a></td>
+  <td class="summary">甘肃渭源县双石门网红露营景区突发山洪致10人遇难，事发前已发3次预警但景区未疏散，引发追责讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">15</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E5%81%87%E9%98%B2%E6%99%92%E8%A1%A3%E4%BB%A5%E6%AC%A1%E5%85%85%E5%A5%BD%E5%8E%82%E5%AE%B6%E5%98%B2%E8%AE%BD%E8%AE%B0%E8%80%85%E5%82%BB%E7%93%9C%23" target="_blank">假防晒衣以次充好厂家嘲讽记者傻瓜</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E5%81%87%E9%98%B2%E6%99%92%E8%A1%A3%E4%BB%A5%E6%AC%A1%E5%85%85%E5%A5%BD%E5%8E%82%E5%AE%B6%E5%98%B2%E8%AE%BD%E8%AE%B0%E8%80%85%E5%82%BB%E7%93%9C%23" target="_blank">查看</a></td>
+  <td class="summary">新京报记者暗访发现防晒衣虚标防晒数值，检测机构与商家勾结花300元直出假合格报告，厂家嘲讽记者'傻瓜'</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">16</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E7%94%B7%E5%AD%90%E5%A5%94%E4%B8%A7%E8%AF%B7%E5%81%87%E8%A2%AB%E6%8B%92%E5%8F%8D%E9%81%AD%E5%85%AC%E5%8F%B8%E8%BE%9E%E9%80%80%23" target="_blank">男子奔丧请假被拒反遭公司辞退</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E7%94%B7%E5%AD%90%E5%A5%94%E4%B8%A7%E8%AF%B7%E5%81%87%E8%A2%AB%E6%8B%92%E5%8F%8D%E9%81%AD%E5%85%AC%E5%8F%B8%E8%BE%9E%E9%80%80%23" target="_blank">查看</a></td>
+  <td class="summary">亲哥去世员工请假奔丧被公司以'非直系亲属'为由辞退，法院判决公司违法解除劳动合同赔偿7000余元</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">17</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%E5%9C%A8%E5%A4%96%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E5%B9%B8%E7%A6%8F%E8%80%85%E9%80%80%E8%AE%A9%E5%8E%9F%E5%88%99" target="_blank">在外一定要注意幸福者退让原则</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%E5%9C%A8%E5%A4%96%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%E5%B9%B8%E7%A6%8F%E8%80%85%E9%80%80%E8%AE%A9%E5%8E%9F%E5%88%99" target="_blank">查看</a></td>
+  <td class="summary">源于用户与AI'豆包'爆笑互动的'幸福者退让原则'刷屏，引发对人际冲突中理性退让的讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">18</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%E5%A4%B1%E4%B8%9A%E5%9C%A8%E5%AE%B6%E4%BD%86%E5%A6%88%E5%A6%88%E8%AF%B4%E5%92%8C%E6%88%91%E4%B8%80%E8%B5%B7%E7%94%9F%E6%B4%BB%E5%BE%88%E8%88%92%E6%9C%8D" target="_blank">失业在家但妈妈说和我一起生活很舒服</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%E5%A4%B1%E4%B8%9A%E5%9C%A8%E5%AE%B6%E4%BD%86%E5%A6%88%E5%A6%88%E8%AF%B4%E5%92%8C%E6%88%91%E4%B8%80%E8%B5%B7%E7%94%9F%E6%B4%BB%E5%BE%88%E8%88%92%E6%9C%8D" target="_blank">查看</a></td>
+  <td class="summary">失业回家后妈妈表示和孩子一起生活很舒服，引发网友共鸣分享家庭温暖与失业焦虑话题</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">19</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23%E8%B6%858%E6%88%90%E8%82%A0%E7%99%8C%E6%82%A3%E8%80%85%E9%95%BF%E6%9C%9F%E9%AB%98%E8%84%82%E9%AB%98%E8%9B%8B%E7%99%BD%E9%A5%AE%E9%A3%9F%23" target="_blank">超8成肠癌患者长期高脂高蛋白饮食</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23%E8%B6%858%E6%88%90%E8%82%A0%E7%99%8C%E6%82%A3%E8%80%85%E9%95%BF%E6%9C%9F%E9%AB%98%E8%84%82%E9%AB%98%E8%9B%8B%E7%99%BD%E9%A5%AE%E9%A3%9F%23" target="_blank">查看</a></td>
+  <td class="summary">数据显示超80%肠癌患者长期高脂高蛋白饮食，因东野圭吾因肠癌去世引发饮食健康关注</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">微博热搜</td>
+  <td class="seq">20</td>
+  <td class="title"><a href="https://s.weibo.com/weibo?q=%23A%E8%82%A1%E8%BF%912800%E8%82%A1%E4%B8%8B%E8%B7%8C%23" target="_blank">A股近2800股下跌</a></td>
+  <td class="link-cell"><a href="https://s.weibo.com/weibo?q=%23A%E8%82%A1%E8%BF%912800%E8%82%A1%E4%B8%8B%E8%B7%8C%23" target="_blank">查看</a></td>
+  <td class="summary">A股持续下跌，沪指跌超2%，近2800只个股下跌，投资者恐慌情绪蔓延</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr class="section-divider"><td colspan="7">📺 今日头条 — 社会民生</td></tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">1</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7666615493654216754/" target="_blank">携程被罚后内部全员信曝光</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7666615493654216754/" target="_blank">查看</a></td>
+  <td class="summary">携程因垄断行为被罚51.79亿元后全员信曝光，要求员工统一口径、破除'二选一'和强制最低价模式</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">126条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">2</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667349603829776430/" target="_blank">今年'震生'50岁了</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667349603829776430/" target="_blank">查看</a></td>
+  <td class="summary">唐山大地震50周年，当年在地震中出生的'震生'们如今已50岁，回顾劫后重生的感人故事</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">69条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">3</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667214424469782564/" target="_blank">趵突泉大树折断刮倒16人 景区致歉</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667214424469782564/" target="_blank">查看</a></td>
+  <td class="summary">济南趵突泉景区一棵大树折断，砸伤16名游客，景区致歉并开展全园树木安全排查</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">45条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">4</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667355494197235209/" target="_blank">网红景区10人遇难 3次预警为何失效</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667355494197235209/" target="_blank">查看</a></td>
+  <td class="summary">甘肃渭源双石门网红露营景区山洪致10人遇难，事发前3次预警未触发疏散，景区管理责任引发质疑</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">200+</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">5</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667382098906336778/" target="_blank">台风'白海豚'或可达超强台风级</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667382098906336778/" target="_blank">查看</a></td>
+  <td class="summary">台风'白海豚'持续增强，可能达到超强台风级别，多地发布防台风预警</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">6</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7666813584466460708/" target="_blank">成都深夜暴雨突袭 最大风力7级</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7666813584466460708/" target="_blank">查看</a></td>
+  <td class="summary">成都深夜遭遇暴雨突袭，最大风力7级，多处路段积水严重，小区一楼被淹</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">48条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">7</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667186077138075675/" target="_blank">公职人员被举报侵吞8亿资产 官方调查</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667186077138075675/" target="_blank">查看</a></td>
+  <td class="summary">衡水安平志臻中学创办人举报公职人员以2元价格侵吞价值8亿元学校股权，官方已成立调查组</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">133条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">8</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667035709995499526/" target="_blank">姐妹刷短视频后相约挑战天竺山被困</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667035709995499526/" target="_blank">查看</a></td>
+  <td class="summary">两名姐妹刷短视频后相约挑战厦门天竺山，因不熟悉路线被困山中，后被救援人员救出</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">9</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7666745513493643306/" target="_blank">重庆连续23天高温打破7月纪录</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7666745513493643306/" target="_blank">查看</a></td>
+  <td class="summary">重庆连续23天高温打破7月历史纪录，极端高温天气持续</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">10</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667198705293606921/" target="_blank">女孩和男友吵架从18层坠楼生还</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667198705293606921/" target="_blank">查看</a></td>
+  <td class="summary">20岁女孩与男友吵架后从18楼坠落奇迹生还，男友扣身份证手机限制自由，治疗费已花11万后续需40余万</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">120条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">11</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667379851115892287/" target="_blank">南华大学校长夏昆被查</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667379851115892287/" target="_blank">查看</a></td>
+  <td class="summary">南华大学校长夏昆被查，不到一个月内两任校长接连落马，均为医学遗传学顶尖学者，曾共事于中南大学</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">184条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">12</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7666404378207600646/" target="_blank">男生出租屋里收到川大录取通知书</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7666404378207600646/" target="_blank">查看</a></td>
+  <td class="summary">一名男生在简陋出租屋中收到四川大学录取通知书，艰苦环境与学业成就的对比引发感动</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">13</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667062599955497014/" target="_blank">甘肃一景区严禁在河道沟道野炊露营</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667062599955497014/" target="_blank">查看</a></td>
+  <td class="summary">甘肃一景区发布通告严禁在河道沟道野炊露营，防范山洪等突发灾害风险</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">14</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7666686445612875786/" target="_blank">医生戳破10大抗癌谣言</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7666686445612875786/" target="_blank">查看</a></td>
+  <td class="summary">专业医生辟谣10大常见抗癌谣言，普及癌症防治科学知识</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">15</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7666427445033324074/" target="_blank">敬一丹公众号疑似辟谣脑溢血传闻</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7666427445033324074/" target="_blank">查看</a></td>
+  <td class="summary">知名主持人敬一丹脑溢血传闻引发关注，其公众号疑似发文辟谣，网友纷纷送上祝福</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">4924条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">16</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667377376050528297/" target="_blank">黑龙江木兰13万只大鹅漫山遍野</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667377376050528297/" target="_blank">查看</a></td>
+  <td class="summary">黑龙江木兰县柳河水库旁山坡散养13万只狮白鹅，视觉冲击力强，该品种由科研团队30年培育而成</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">299条</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">17</td>
+  <td class="title"><a href="https://www.toutiao.com/article/7667230245925241344" target="_blank">这组数据，看中国'三农'新发展</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/article/7667230245925241344" target="_blank">查看</a></td>
+  <td class="summary">通过一组数据展示中国农业农村农民'三农'领域的新发展成就</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-low">低价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">18</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667334557612458047/" target="_blank">媒体：掌掴小球员背后是中国青训之殇</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667334557612458047/" target="_blank">查看</a></td>
+  <td class="summary">教练掌掴小球员事件引发关注，媒体评论指出中国足球青训存在暴力管教问题，呼吁制度规范</td>
+  <td class="comment-count"><span class="cmt-badge cmt-ok">58条</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">19</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7667323778396851766/" target="_blank">邹市明夫妇7年亏2亿真是运气差吗</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7667323778396851766/" target="_blank">查看</a></td>
+  <td class="summary">拳王邹市明夫妇创业7年亏损2亿元，分析其投资失败的原因与商业决策失误</td>
+  <td class="comment-count"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="value"><span class="value-tag value-high">高价值</span></td>
+</tr>
+<tr>
+  <td class="platform" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">今日头条</td>
+  <td class="seq">20</td>
+  <td class="title"><a href="https://www.toutiao.com/trending/7666085666668888105/" target="_blank">大衣哥坦言为何不开演唱会</a></td>
+  <td class="link-cell"><a href="https://www.toutiao.com/trending/7666085666668888105/" target="_blank">查看</a></td>
+  <td class="summary">大衣哥朱之文坦言自己不开演唱会的原因，保持朴实本色引发讨论</td>
+  <td class="comment-count"><span class="cmt-badge cmt-low">不足20条</span></td>
+  <td class="value"><span class="value-tag value-mid">中性</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="footer">
+  <p><strong>价值度评估标准：</strong></p>
+  <p>高价值：充满争议、有冲击力的事件、腐败、矛盾冲突、家庭伦理矛盾（婚姻财产争端/夫妻情侣矛盾/出轨/婆媳矛盾）、经济纠纷、诈骗、毁三观、颠覆认知、有看点</p>
+  <p>低价值：一般性新闻资讯、天气、局部的自然灾害报道</p>
+  <p>中性：不符合高价值或低价值标准的其他新闻</p>
+  <p style="margin-top:8px;">评论数量说明：网易新闻通过评论API获取；腾讯新闻评论需QQ登录认证无法获取；微博热搜评论需登录无法获取；今日头条通过页面静态内容获取部分</p>
+  <div class="visit-counter">
+    <span id="busuanzi_container_site_pv" style="display:none;">
+      本页总访问量：<span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    <span id="busuanzi_container_site_uv" style="display:none; margin-left:16px;">
+      访客数：<span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    <span id="busuanzi_loading" style="color:#999;font-size:12px;">统计加载中...</span>
+  </div>
+</div>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+// 不蒜子加载完成后隐藏loading、显示计数
+(function(){
+  function checkLoaded(){
+    var pvEl = document.getElementById('busuanzi_value_site_pv');
+    if(pvEl && pvEl.innerText){
+      document.getElementById('busuanzi_container_site_pv').style.display = 'inline';
+      document.getElementById('busuanzi_container_site_uv').style.display = 'inline';
+      var loading = document.getElementById('busuanzi_loading');
+      if(loading) loading.style.display = 'none';
+    } else {
+      setTimeout(checkLoaded, 500);
+    }
+  }
+  setTimeout(checkLoaded, 1000);
+  // 10秒后如果还没加载成功，显示提示
+  setTimeout(function(){
+    var loading = document.getElementById('busuanzi_loading');
+    var pv = document.getElementById('busuanzi_container_site_pv');
+    if(loading && loading.style.display !== 'none'){
+      loading.innerText = '统计服务暂时不可用';
+    }
+  }, 10000);
+})();
+</script>
+</body>
+</html>
