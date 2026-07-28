@@ -105,6 +105,67 @@
   .footer { margin-top: 24px; font-size: 13px; color: #999; text-align: center; }
   .footer p { margin-bottom: 6px; }
   .visit-counter { margin-top: 16px; padding: 12px 20px; background: #f0f2f5; border-radius: 8px; font-size: 14px; color: #666; font-weight: 600; }
+
+  .donate-section {
+    display: flex; justify-content: center; margin-bottom: 20px;
+  }
+  .donate-card {
+    display: flex; align-items: center; gap: 16px;
+    background: #fff; border-radius: 10px; padding: 14px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08); max-width: 380px;
+  }
+  .donate-qr {
+    width: 90px; height: 90px; border-radius: 8px; overflow: hidden;
+    border: 1px solid #eef0f4; flex-shrink: 0; background: #f5f7fa;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .donate-qr img { width: 100%; height: 100%; object-fit: cover; }
+  .donate-text p { font-size: 13px; color: #888; margin-bottom: 2px; }
+  .donate-text p:first-child { font-size: 14px; color: #333; font-weight: 600; margin-bottom: 4px; }
+
+  @media (max-width: 768px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 18px; }
+    .header .meta { font-size: 12px; }
+    .stats { gap: 8px; }
+    .stat-card { padding: 8px 10px; min-width: 0; flex: 1; }
+    .stat-card .num { font-size: 20px; }
+    .stat-card .label { font-size: 12px; }
+    .stat-card .sub { display: none; }
+    .value-summary { gap: 8px; }
+    .vs-card { padding: 8px 10px; min-width: 0; flex: 1; }
+    .vs-card .vs-num { font-size: 18px; }
+    .legend { flex-direction: column; gap: 8px; align-items: flex-start; font-size: 12px; }
+    .donate-card { flex-direction: column; text-align: center; gap: 10px; padding: 14px; }
+    .donate-qr { width: 110px; height: 110px; }
+
+    .table-wrapper { box-shadow: none; background: transparent; border-radius: 0; overflow: visible; }
+    table { min-width: 0; }
+    thead { display: none; }
+    tbody tr:not(.section-divider) {
+      display: block; margin-bottom: 10px; border: 1px solid #eef0f4;
+      border-radius: 8px; padding: 12px 14px; background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    tbody tr.section-divider { margin-top: 18px; }
+    tbody tr.section-divider:first-child { margin-top: 0; }
+    tbody tr.section-divider td {
+      border-radius: 6px; font-size: 14px; padding: 8px 12px;
+    }
+    tbody td {
+      display: block; padding: 3px 0; text-align: left !important; border: none;
+    }
+    tbody td::before {
+      content: attr(data-label);
+      font-weight: 600; color: #999; font-size: 11px;
+      display: inline-block; width: 56px; margin-right: 6px; vertical-align: top;
+    }
+    tbody td.seq, tbody td.link-cell { display: none; }
+    td.platform { border-left: 4px solid; padding-left: 8px; white-space: normal; }
+    td.title a { font-size: 15px; }
+    td.summary { font-size: 13px; line-height: 1.6; }
+    td.comment-count, td.value { padding-top: 4px; }
+  }
 </style>
 </head>
 <body>
@@ -131,6 +192,18 @@
   <div class="legend-item"><span class="value-tag value-high">高价值</span> 争议/腐败/冲突/诈骗/毁三观/家庭伦理矛盾/经济纠纷</div>
   <div class="legend-item"><span class="value-tag value-mid">中性</span> 民生政策/健康科普/纪念活动/社会现象</div>
   <div class="legend-item"><span class="value-tag value-low">低价值</span> 一般资讯/天气/局部灾害报道</div>
+</div>
+
+<div class="donate-section">
+  <div class="donate-card">
+    <div class="donate-qr" id="donate-qr-box">
+      <span style="font-size:11px;color:#999;">赞赏码</span>
+    </div>
+    <div class="donate-text">
+      <p>觉得有用？请作者喝杯咖啡</p>
+      <p>你的支持是持续更新的动力</p>
+    </div>
+  </div>
 </div>
 
 <div class="table-wrapper">
@@ -916,6 +989,77 @@
       loading.innerText = '统计服务暂时不可用';
     }
   }, 10000);
+})();
+</script>
+<script>
+(function() {
+  var tbody = document.querySelector('tbody');
+  if (!tbody) return;
+
+  function getValueRank(td) {
+    var t = td.textContent;
+    if (t.indexOf('\u9ad8\u4ef7\u503c') !== -1) return 3;
+    if (t.indexOf('\u4e2d\u6027') !== -1) return 2;
+    if (t.indexOf('\u4f4e\u4ef7\u503c') !== -1) return 1;
+    return 0;
+  }
+  function getCommentCount(td) {
+    var t = td.textContent.trim();
+    if (t.indexOf('\u65e0\u6cd5\u83b7\u53d6') !== -1) return -1;
+    if (t.indexOf('\u4e0d\u8db320') !== -1) return 0;
+    var m = t.match(/(\d+)/);
+    return m ? parseInt(m[1]) : 0;
+  }
+
+  var labels = ['\u5e73\u53f0', '', '\u6807\u9898', '', '\u6982\u8981', '\u8bc4\u8bba\u6570', '\u4ef7\u503c\u5ea6'];
+  var allRows = Array.from(tbody.querySelectorAll('tr'));
+  allRows.forEach(function(row) {
+    if (row.classList.contains('section-divider')) return;
+    var tds = row.querySelectorAll('td');
+    for (var i = 0; i < tds.length; i++) {
+      if (labels[i]) tds[i].setAttribute('data-label', labels[i]);
+    }
+  });
+
+  var dataRows = allRows.filter(function(r) {
+    return !r.classList.contains('section-divider');
+  });
+
+  dataRows.sort(function(a, b) {
+    var va = getValueRank(a.querySelector('.value'));
+    var vb = getValueRank(b.querySelector('.value'));
+    if (va !== vb) return vb - va;
+    var ca = getCommentCount(a.querySelector('.comment-count'));
+    var cb = getCommentCount(b.querySelector('.comment-count'));
+    return cb - ca;
+  });
+
+  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+
+  var lastValue = -1, seq = 1;
+  var dividers = {};
+  dividers[3] = '\ud83d\udd25 \u9ad8\u4ef7\u503c \u2014 \u4e89\u8bae/\u8150\u8d25/\u51b2\u7a81/\u8bc8\u9a97/\u6bc1\u4e09\u89c2/\u5bb6\u5ead\u4f26\u7406\u77db\u76fe/\u7ecf\u6d4e\u7ea0\u7eb7';
+  dividers[2] = '\ud83d\udccb \u4e2d\u6027 \u2014 \u6c11\u751f\u653f\u7b56/\u5065\u5eb7\u79d1\u666e/\u7eaa\u5ff5\u6d3b\u52a8/\u793e\u4f1a\u73b0\u8c61';
+  dividers[1] = '\ud83d\udccb \u4f4e\u4ef7\u503c \u2014 \u4e00\u822c\u8d44\u8baf/\u5929\u6c14/\u5c40\u90e8\u707e\u5bb3\u62a5\u9053';
+
+  dataRows.forEach(function(row) {
+    var val = getValueRank(row.querySelector('.value'));
+    if (val !== lastValue) {
+      var dr = document.createElement('tr');
+      dr.className = 'section-divider';
+      var dt = document.createElement('td');
+      dt.colSpan = 7;
+      dt.textContent = dividers[val] || '';
+      dr.appendChild(dt);
+      tbody.appendChild(dr);
+      lastValue = val;
+      seq = 1;
+    }
+    var seqCell = row.querySelector('.seq');
+    if (seqCell) seqCell.textContent = seq;
+    seq++;
+    tbody.appendChild(row);
+  });
 })();
 </script>
 </body>
