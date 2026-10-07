@@ -1,565 +1,412 @@
 module.exports = {
   "version": 1,
-  "collectDate": "2026年09月26日",
-  "generatedAt": "2026-09-26T03:08:00.325Z",
+  "collectDate": "2026年10月07日",
+  "generatedAt": "2026-10-07T09:51:28.605Z",
   "stats": {
     "platforms": [
       {
         "platform": "网易新闻",
-        "count": 20,
-        "dist": "高18 中2 低0"
+        "count": 10,
+        "dist": "高6 中3 低1"
       },
       {
         "platform": "腾讯新闻",
-        "count": 20,
-        "dist": "高7 中13 低0"
+        "count": 13,
+        "dist": "高5 中7 低1"
       },
       {
         "platform": "微博热搜",
         "count": 17,
-        "dist": "高4 中7 低6"
+        "dist": "高9 中7 低1"
       },
       {
         "platform": "今日头条",
-        "count": 9,
-        "dist": "高1 中5 低3"
+        "count": 20,
+        "dist": "高14 中2 低4"
       }
     ],
     "valueSummary": [
       {
         "level": "high",
-        "num": 30,
+        "num": 34,
         "label": "高价值"
       },
       {
         "level": "mid",
-        "num": 27,
+        "num": 19,
         "label": "中性"
       },
       {
         "level": "low",
-        "num": 9,
+        "num": 7,
         "label": "低价值"
       }
     ],
-    "total": 66
+    "total": 60
   },
   "groups": {
+    "微博热搜": [
+      {
+        "platform": "微博热搜",
+        "seq": 1,
+        "title": "为什么学校不统一打印作业",
+        "url": "https://s.weibo.com/weibo?q=%23%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AD%A6%E6%A0%A1%E4%B8%8D%E7%BB%9F%E4%B8%80%E6%89%93%E5%8D%B0%E4%BD%9C%E4%B8%9A%23",
+        "summary": "家长吐槽学校不统一打印作业，打印任务转嫁给家庭，教育负担话题再度引发家长群体热议。",
+        "comments": "961954条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 2,
+        "title": "猫喂了没有成求救暗号",
+        "url": "https://s.weibo.com/weibo?q=%23%E7%8C%AB%E5%96%82%E4%BA%86%E6%B2%A1%E6%9C%89%E6%88%90%E6%B1%82%E6%95%91%E6%9A%97%E5%8F%B7%23",
+        "summary": "王星被骗至妙瓦底期间以“猫喂了没”作为求救暗号联络女友，机智求救细节令网友揪心，跨境诈骗危害再敲警钟。",
+        "comments": "609405条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 3,
+        "title": "中国警方回应缅北电诈死灰复燃",
+        "url": "https://s.weibo.com/weibo?q=%23%E4%B8%AD%E5%9B%BD%E8%AD%A6%E6%96%B9%E5%9B%9E%E5%BA%94%E7%BC%85%E5%8C%97%E7%94%B5%E8%AF%88%E6%AD%BB%E7%81%B0%E5%A4%8D%E7%87%83%23",
+        "summary": "针对缅北电诈死灰复燃的说法，中国警方正面回应，表示打击跨境电诈决心不变，持续保持高压态势。",
+        "comments": "500070条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 4,
+        "title": "程序员为女友抢号搞瘫医院挂号系统",
+        "url": "https://s.weibo.com/weibo?q=%23%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%BA%E5%A5%B3%E5%8F%8B%E6%8A%A2%E5%8F%B7%E6%90%9E%E7%98%AB%E5%8C%BB%E9%99%A2%E6%8C%82%E5%8F%B7%E7%B3%BB%E7%BB%9F%23",
+        "summary": "一程序员为帮女友抢号编写脚本，导致医院挂号系统瘫痪，公共医疗资源被恶意抢占的行为引发众怒。",
+        "comments": "304297条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 5,
+        "title": "女子美容院灌肠肠子被捅破",
+        "url": "https://s.weibo.com/weibo?q=%23%E5%A5%B3%E5%AD%90%E7%BE%8E%E5%AE%B9%E9%99%A2%E7%81%8C%E8%82%A0%E8%82%A0%E5%AD%90%E8%A2%AB%E6%8D%85%E7%A0%B4%23",
+        "summary": "女子在美容院接受灌肠服务时肠子被捅破，美容院超范围经营医疗项目的乱象再引关注，消费者安全堪忧。",
+        "comments": "286608条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 6,
+        "title": "柬埔寨太子集团头目陈志真容",
+        "url": "https://s.weibo.com/weibo?q=%23%E6%9F%AC%E5%9F%94%E5%AF%A8%E5%A4%AA%E5%AD%90%E9%9B%86%E5%9B%A2%E5%A4%B4%E7%9B%AE%E9%99%88%E5%BF%97%E7%9C%9F%E5%AE%B9%23",
+        "summary": "柬埔寨太子集团头目陈志真容首次公开，跨国电诈集团头目落网细节曝光，网友持续关注案件进展。",
+        "comments": "225215条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 7,
+        "title": "粤J2888T车主称修车花了约半台车钱",
+        "url": "https://s.weibo.com/weibo?q=%23%E7%B2%A4J2888T%E8%BD%A6%E4%B8%BB%E7%A7%B0%E4%BF%AE%E8%BD%A6%E8%8A%B1%E4%BA%86%E7%BA%A6%E5%8D%8A%E5%8F%B0%E8%BD%A6%E9%92%B1%23",
+        "summary": "粤J2888T车主维权事件持续发酵，车主称修车花费约半台车钱，事故定损与维修纠纷引发全网关注。",
+        "comments": "223007条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 8,
+        "title": "上3休1再上5休2",
+        "url": "https://s.weibo.com/weibo?q=%23%E4%B8%8A3%E4%BC%911%E5%86%8D%E4%B8%8A5%E4%BC%912%23",
+        "summary": "节后调休安排“上3休1再上5休2”引发热议，打工人对复杂调休制度的吐槽折射假期制度改革诉求。",
+        "comments": "180869条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 9,
+        "title": "换董事长头像骗财务转账1700万",
+        "url": "https://s.weibo.com/weibo?q=%23%E6%8D%A2%E8%91%A3%E4%BA%8B%E9%95%BF%E5%A4%B4%E5%83%8F%E9%AA%97%E8%B4%A2%E5%8A%A1%E8%BD%AC%E8%B4%A61700%E4%B8%87%23",
+        "summary": "电诈人员冒用董事长头像诱导财务转账1700万元，冒充领导类诈骗手段升级，企业财务防骗意识敲响警钟。",
+        "comments": "128037条",
+        "value": "高价值"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 35,
+        "title": "多举措全力护航假期铁路返程",
+        "url": "https://s.weibo.com/weibo?q=%23%E5%A4%9A%E4%B8%BE%E6%8E%AA%E5%85%A8%E5%8A%9B%E6%8A%A4%E8%88%AA%E5%81%87%E6%9C%9F%E9%93%81%E8%B7%AF%E8%BF%94%E7%A8%8B%23",
+        "summary": "铁路部门出台多项举措护航假期返程，加开列车、优化换乘，应对持续高位的返程客流。",
+        "comments": "799088条",
+        "value": "中性"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 36,
+        "title": "酒店保洁吐槽带娃拼床复位累到崩溃",
+        "url": "https://s.weibo.com/weibo?q=%23%E9%85%92%E5%BA%97%E4%BF%9D%E6%B4%81%E5%90%90%E6%A7%BD%E5%B8%A6%E5%A8%83%E6%8B%BC%E5%BA%8A%E5%A4%8D%E4%BD%8D%E7%B4%AF%E5%88%B0%E5%B4%A9%E6%BA%83%23",
+        "summary": "酒店保洁员吐槽假期带娃家庭拼床复位工作量大累到崩溃，假期服务业劳动者辛酸引发共鸣与讨论。",
+        "comments": "473132条",
+        "value": "中性"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 37,
+        "title": "在泰失联的上海音乐教师已安全回国",
+        "url": "https://s.weibo.com/weibo?q=%23%E5%9C%A8%E6%B3%B0%E5%A4%B1%E8%81%94%E7%9A%84%E4%B8%8A%E6%B5%B7%E9%9F%B3%E4%B9%90%E6%95%99%E5%B8%88%E5%B7%B2%E5%AE%89%E5%85%A8%E5%9B%9E%E5%9B%BD%23",
+        "summary": "此前在泰国失联的上海音乐教师已安全回国，跨境失联事件圆满解决，出境安全话题持续受关注。",
+        "comments": "247612条",
+        "value": "中性"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 38,
+        "title": "高铁坐过站还能免费坐回去",
+        "url": "https://s.weibo.com/weibo?q=%23%E9%AB%98%E9%93%81%E5%9D%90%E8%BF%87%E7%AB%99%E8%BF%98%E8%83%BD%E5%85%8D%E8%B4%B9%E5%9D%90%E5%9B%9E%E5%8E%BB%23",
+        "summary": "高铁坐过站可免费乘车返回的话题登上热搜，铁路暖心政策被广泛科普，旅客直呼实用。",
+        "comments": "222625条",
+        "value": "中性"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 39,
+        "title": "结婚真轻松建议全国推广",
+        "url": "https://s.weibo.com/weibo?q=%E7%BB%93%E5%A9%9A%E7%9C%9F%E8%BD%BB%E6%9D%BE%E5%BB%BA%E8%AE%AE%E5%85%A8%E5%9B%BD%E6%8E%A8%E5%B9%BF",
+        "summary": "网友分享部分地区结婚登记简化流程的体验，感叹结婚真轻松建议全国推广，婚俗改革话题引发讨论。",
+        "comments": "187774条",
+        "value": "中性"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 40,
+        "title": "国庆招待会上的打包盒被他珍藏",
+        "url": "https://s.weibo.com/weibo?q=%23%E5%9B%BD%E5%BA%86%E6%8B%9B%E5%BE%85%E4%BC%9A%E4%B8%8A%E7%9A%84%E6%89%93%E5%8C%85%E7%9B%92%E8%A2%AB%E4%BB%96%E7%8F%8D%E8%97%8F%23",
+        "summary": "国庆招待会上的一只打包盒被参会者珍藏，厉行节约的细节传递朴素作风，引发网友好感。",
+        "comments": "179466条",
+        "value": "中性"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 41,
+        "title": "莫氏鸡煲老板贷款300万建养鸡场",
+        "url": "https://s.weibo.com/weibo?q=%23%E8%8E%AB%E6%B0%8F%E9%B8%A1%E7%85%B2%E8%80%81%E6%9D%BF%E8%B4%B7%E6%AC%BE300%E4%B8%87%E5%BB%BA%E5%85%BB%E9%B8%A1%E5%9C%BA%23",
+        "summary": "网红餐饮莫氏鸡煲老板贷款300万自建养鸡场保障食材，餐饮老板重资产豪赌引发创业风险讨论。",
+        "comments": "173386条",
+        "value": "中性"
+      },
+      {
+        "platform": "微博热搜",
+        "seq": 54,
+        "title": "网友称天安门小猫入编故宫",
+        "url": "https://s.weibo.com/weibo?q=%E7%BD%91%E5%8F%8B%E7%A7%B0%E5%A4%A9%E5%AE%89%E9%97%A8%E5%B0%8F%E7%8C%AB%E5%85%A5%E7%BC%96%E6%95%85%E5%AE%AB",
+        "summary": "网友调侃常驻天安门广场的小猫“入编故宫”，可爱日常成为假期游客打卡彩蛋，轻松话题治愈网友。",
+        "comments": "132682条",
+        "value": "低价值"
+      }
+    ],
     "网易新闻": [
       {
         "platform": "网易新闻",
-        "seq": 1,
-        "title": "产科关门，学校倒闭！连锁反应即将到来，没有哪个行业可以幸免",
-        "url": "https://m.163.com/news/article/L7HG7OGO0553NZDK.html",
-        "summary": "出生率下滑引发产科关停、学校倒闭的连锁反应，分析人口结构变化对教育、医疗、消费等各行业的深远冲击。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 2,
-        "title": "20多万元现金被烧成“黑炭”，年迈失独夫妇家中起火，银行最终为其兑换13.12万元",
-        "url": "https://m.163.com/news/article/L7O8RP6U05129QAF.html",
-        "summary": "失独夫妇家中起火，20多万现金烧成黑炭粘连结块，银行工作人员耗时清点残币，最终为其兑换13.12万元。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 3,
-        "title": "多地网友发现车上莫名其妙出现小圆洞 专家提醒",
-        "url": "https://m.163.com/news/article/L7O80T9B053469LG.html",
-        "summary": "多地车主发现车辆莫名出现小圆洞，专家提醒可能与新型盗抢或恶意破坏手法有关，呼吁及时报警并保留证据。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 4,
-        "title": "国安部：航天科研人员赵某在访学期间被境外间谍策反，提供大量情报收取数十万元，被判7年",
-        "url": "https://m.163.com/news/article/L7O5RJ5D051482MP.html",
-        "summary": "国安部披露航天科研人员赵某赴境外访学时被间谍机关策反，出卖大量情报收取数十万元，被依法判处7年。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 5,
-        "title": "景区招18个“野人”600人疯抢：有阿姨58岁才第一次上班",
-        "url": "https://m.163.com/news/article/L7O1KS6H0001899O.html",
-        "summary": "景区招聘18个“野人”扮演岗位吸引600人报名，58岁阿姨第一次上班引发关注，折射中年就业困境与新业态活力。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 6,
-        "title": "物业费从2.2元涨到5.95元，九成业主还举手赞成：这个小区揭穿了“物业=敌人”的伪命题",
-        "url": "https://m.163.com/news/article/L3ITRH73055612K8.html",
-        "summary": "某小区物业费从2.2元涨至5.95元，九成业主表决赞成，业主与物业从对立走向合作，颠覆“物业=敌人”的固有认知。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 7,
-        "title": "应休尽休！河南带薪休假新政来了，鼓励试行“周五半天+周末+年假”短途度假模式",
-        "url": "https://m.163.com/news/article/L3IMP4MF05561G0D.html",
-        "summary": "河南出台带薪休假新政，明确应休尽休，鼓励试行周五半天加周末加年假的短途度假模式，回应职工休假难题。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 8,
-        "title": "出狱前8天被改判死缓，最高检指导案例公布案件细节",
-        "url": "https://m.163.com/news/article/L3IKG80M0534A4SC.html",
-        "summary": "最高检公布指导案例：罪犯出狱前8天被改判死缓，案件细节曝光，彰显检察机关对冤错与轻纵案件的法律监督。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 9,
-        "title": "传销头目出狱后开办国学书院，家长被洗脑称孩子挨打才有效果",
-        "url": "https://m.163.com/news/article/L3IK8R6U05129QAF.html",
-        "summary": "传销头目出狱后开办国学书院，以戒尺体罚等方式管教孩子，家长被洗脑称挨打才有效，暴露校外机构监管漏洞。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
         "seq": 10,
-        "title": "“全部删除！”妈妈翻看女儿电话手表后爆发大吵：聊天群有10多个，通讯录一半是陌生人",
-        "url": "https://m.163.com/news/article/L3IEL8MM0530JPVV.html",
-        "summary": "妈妈翻看女儿电话手表发现十多个聊天群、半数通讯录是陌生人，强令全部删除引发激烈冲突，孩子哭诉不被尊重。",
+        "title": "演员王星被骗至妙瓦底4天遭转卖3次 向女友发求救暗号",
+        "url": "https://m.163.com/news/article/L8L707DO051482MP.html",
+        "summary": "演员王星被骗至缅甸妙瓦底电诈园区，4天内遭转卖3次，期间以“猫喂了没”作为暗号向女友求救，案件细节披露引发对跨境拐骗的关注。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "网易新闻",
         "seq": 11,
-        "title": "杭州男子下班路上“多看一眼”，感觉事情必有蹊跷……3人落网",
-        "url": "https://m.163.com/news/article/L3H1RHA50514R9OJ.html",
-        "summary": "杭州男子下班路上多看一眼发现蹊跷并报警，警方顺藤摸瓜抓获3名嫌疑人，市民警觉性助力破案引热议。",
+        "title": "被骗至妙瓦底4天被卖3次 演员王星案详细案情披露",
+        "url": "https://m.163.com/news/article/L8L65TUV053469LG.html",
+        "summary": "警方披露王星案详细案情：从被骗出境到园区转卖的全过程曝光，牵出跨境人口贩卖链条，受害人如何在四天内三易其手引发热议。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "网易新闻",
         "seq": 12,
-        "title": "申通老板娘前夫撤诉，2.8亿元离婚“旧账”画上句号",
-        "url": "https://m.163.com/news/article/L3GT1RA7051492T3.html",
-        "summary": "申通老板娘与前夫的2.8亿元离婚财产纠纷以对方撤诉告终，持续多年的豪门离婚“旧账”画上句号。",
+        "title": "妙瓦底赌诈头目“江湖哥”落网画面首披露 态度十分嚣张",
+        "url": "https://m.163.com/news/article/L8L1G3800001899O.html",
+        "summary": "妙瓦底赌诈园区头目佘智江（外号江湖哥）落网画面首次公开，其落网时态度嚣张，扬言人脉能摆平一切，如今面临法律审判。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "网易新闻",
         "seq": 13,
-        "title": "女子举报985高校博士后在妻子孕期出轨，隐瞒已婚事实与自己交往，起诉男方侵犯人格权",
-        "url": "https://m.163.com/news/article/L3FUOV3K0530JPVV.html",
-        "summary": "女子举报985高校博士后隐瞒已婚身份交往并致其受伤，孕期出轨情节曝光，起诉侵犯人格权，男方已入职新高校。",
+        "title": "26岁白俄模特被诱骗至缅甸遭活摘器官后杀害 详情披露",
+        "url": "https://m.163.com/news/article/L8J70EKP05345ARG.html",
+        "summary": "26岁白俄罗斯模特被诱骗至缅甸后遭活摘器官并杀害，案件详情披露，跨境人口贩卖与器官交易的黑色产业链令人震惊。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "网易新闻",
         "seq": 14,
-        "title": "千万别用手拍，最近很多人家里有！深圳曾有一男子被迫摘除眼球，“第二天就失明”",
-        "url": "https://m.163.com/news/article/L3FN3MOQ05129QAF.html",
-        "summary": "秋季隐翅虫等虫类高发，医生提醒切勿用手拍打，深圳曾有男子拍打后感染被迫摘除眼球，健康风险引关注。",
+        "title": "不可思议！网传江苏夫妻教数学物理五年收入340万，目标300万躺平",
+        "url": "https://m.163.com/news/article/L8LCBTC1055615NW.html",
+        "summary": "网传江苏一对夫妻靠上门辅导数学物理五年收入340万元，称攒够300万就躺平，家庭教师高收入与教育内卷话题引发争议。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "网易新闻",
         "seq": 15,
-        "title": "昆明一检测列车撞人致11死2伤，国铁昆明局被罚300万元",
-        "url": "https://m.163.com/news/article/L31I0RT50534A4SC.html",
-        "summary": "昆明检测列车撞人事故致11死2伤，官方处罚结果公布，国铁昆明局被罚300万元，铁路沿线安全管理引追问。",
+        "title": "婚宴14道主菜上错7道 新郎父亲：和亲家的关系都变僵",
+        "url": "https://m.163.com/news/article/L8JLK33B051492LM.html",
+        "summary": "婚宴14道主菜上错7道，新郎父亲称与亲家关系因此变僵，酒店婚宴服务纠纷升级为两家人矛盾，消费维权话题引热议。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "网易新闻",
-        "seq": 16,
-        "title": "“除非家里死人，不要跟我临时请假” 广东一医生工作群言论引热议，医院和省卫健委介入",
-        "url": "https://m.163.com/news/article/L30PQKUJ0550HXM1.html",
-        "summary": "广东一医生在群里称“除非家里死人不要临时请假”引发热议，医院正核实，省卫健委表示已介入调查。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 17,
-        "title": "保姆因无法生育，拐走雇主家10月龄男婴35年，因犯拐骗儿童罪获刑3年",
-        "url": "https://m.163.com/news/article/L319JOMS0550HXM1.html",
-        "summary": "保姆因无法生育拐走雇主家10月龄男婴抚养35年，养子追问身世才案发，保姆获刑3年，警方还原当年案发经过。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 18,
-        "title": "一家三口打赏主播650万后甩锅孩子，平台回应",
-        "url": "https://m.163.com/news/article/L3159AIF05568W0A.html",
-        "summary": "一家三口累计打赏主播650万元后称系孩子操作要求退款，平台回应调查，成年人大额打赏退款边界引发讨论。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "网易新闻",
-        "seq": 31,
-        "title": "时隔21年，上海地铁将调价",
-        "url": "https://m.163.com/news/article/L31LSM3P055040N3.html",
-        "summary": "上海地铁时隔21年启动票价调整，涉及计价规则与优惠方案，通勤成本变化受到市民广泛关注。",
+        "seq": 42,
+        "title": "女生买3条总价不到80元“次抛衣”出国游 回程直接扔掉",
+        "url": "https://m.163.com/news/article/L8L3CA8K05345ARG.html",
+        "summary": "有女生购买总价不到80元的3条“次抛衣”出国旅游，回程直接丢弃，低成本快时尚旅行方式引发环保与消费观念讨论。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
         "platform": "网易新闻",
-        "seq": 32,
-        "title": "降至2.7%！银行房贷利率再现低位",
-        "url": "https://m.163.com/news/article/L3H5MOQD0519DDOA.html",
-        "summary": "多地银行房贷利率降至2.7%的历史低位，购房成本进一步下降，楼市政策走向与市场反应受关注。",
+        "seq": 43,
+        "title": "冲上热搜！吴奇隆被曝因国庆期间手举国旗遭台湾取消活动",
+        "url": "https://m.163.com/news/article/L8LAVLU5055040N3.html",
+        "summary": "吴奇隆被曝因国庆期间手举国旗遭台湾方面取消活动，本人晒爬长城视频回应称“不赚钱也是这个立场”，态度坚定获内地网友力挺。",
         "comments": "无法获取",
         "value": "中性"
+      },
+      {
+        "platform": "网易新闻",
+        "seq": 44,
+        "title": "广州新万象城爆火！全是打卡，买东西的少？",
+        "url": "https://m.163.com/news/article/L8L9FR4A0553TEQM.html",
+        "summary": "广州新万象城开业爆火，游客打卡拍照的多、实际购物消费的少，商业体网红化现象背后客流如何转化为消费引发讨论。",
+        "comments": "无法获取",
+        "value": "中性"
+      },
+      {
+        "platform": "网易新闻",
+        "seq": 55,
+        "title": "明起三天北京以晴到多云为主，周日夜间起有小雨、雨后北风加大",
+        "url": "https://m.163.com/news/article/L8L9URHO0512D3VJ.html",
+        "summary": "北京未来三天以晴到多云天气为主，周日夜间起将有小雨，雨后北风加大，气温波动，市民出行需注意添衣保暖。",
+        "comments": "无法获取",
+        "value": "低价值"
       }
     ],
     "腾讯新闻": [
       {
         "platform": "腾讯新闻",
+        "seq": 16,
+        "title": "柬埔寨太子集团头目陈志押解现场画面公开",
+        "url": "https://news.qq.com/rain/a/20261007A03YZ100",
+        "summary": "柬埔寨太子集团头目陈志押解回国现场画面公开，跨国电诈集团核心人物落网，打击跨境赌博诈骗专项行动取得重大进展。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "腾讯新闻",
+        "seq": 17,
+        "title": "10月民生事项集中：购房贴息、医保缴费要看哪些条件？",
+        "url": "https://news.qq.com/rain/a/20261005A04ZOF00",
+        "summary": "10月民生事项集中落地：首套购房贷款贴息启动、城乡居民医保集中缴费开闸，同时需警惕冒充医保人社部门的缴费诈骗。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "腾讯新闻",
+        "seq": 18,
+        "title": "新法速递：10月这些新规将影响你我生活，事关房贷、药品",
+        "url": "https://new.qq.com/rain/a/20260930A08WUU00",
+        "summary": "10月起一批新规施行：居民购房贷款贴息政策落地、麻精药品管理新规实施、国防动员法修订施行，多项政策与民生息息相关。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "腾讯新闻",
         "seq": 19,
-        "title": "国安部披露：一陆生赴台湾交流时与“学姐”坠入爱河，对方实为台间谍",
-        "url": "https://news.qq.com/rain/a/20260926A02WSA00",
-        "summary": "国安部披露典型案例：大陆学生赴台交流期间恋爱对象实为台方间谍人员，警示境外势力对青年学生的渗透风险。",
+        "title": "“你要不要命了！”接连两起，交警怒吼救下多条性命！",
+        "url": "https://news.qq.com/rain/a/20261007A02GSE00",
+        "summary": "接连两起险情中交警怒吼拦停涉险车辆和人员，救下多条性命，假期返程交通安全的惊险瞬间引发关注。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "腾讯新闻",
         "seq": 20,
-        "title": "7万吨铁矿船，载不动务工梦：18名中国船员失联印度洋",
-        "url": "https://news.qq.com/rain/a/20260926A00O4Q00",
-        "summary": "一艘7万吨铁矿船在印度洋失联，18名中国船员下落不明，多为务工人员，搜救进展与船员权益保障引发关注。",
+        "title": "《只此青绿》主办方诚恳道歉：体育馆模式经验不足，可全额退票",
+        "url": "https://news.qq.com/rain/a/20261007A02NC200",
+        "summary": "《只此青绿》演出因场馆模式经验不足引发观演纠纷，主办方公开道歉并承诺可全额退票，演出消费权益话题受关注。",
         "comments": "无法获取",
         "value": "高价值"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 21,
-        "title": "退休群体三件民生大事定调：养老金上调、长护险全国推、医保提标",
-        "url": "https://new.qq.com/rain/a/20260905A0AV0100",
-        "summary": "国家从养老金、长期护理保险、医保三方面发力：基础养老金最低标准提至163元、长护险全国推行、医保补助提标。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 22,
-        "title": "1岁男童沙漠走失上热搜，50人搜救12小时后成功找回",
-        "url": "https://new.qq.com/rain/a/20260905A0AV0100",
-        "summary": "青海都兰县1岁男童沙漠走失，民警等50人拉起人墙、动用直升机与无人机连夜搜救12小时，最终成功找回。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 23,
-        "title": "超长假期拼假上热搜，网友吐槽“有假不敢休”引热议",
-        "url": "https://new.qq.com/rain/a/20260905A0AV0100",
-        "summary": "长假拼假方案上热搜，部分企业推弹性办公错峰休假，但不少职工因顾虑“不敢休”，带薪年假落地难成焦点。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 24,
-        "title": "“梅姨案”进入审判阶段，检察院已对“梅姨”提起公诉",
-        "url": "https://new.qq.com/rain/a/20260903A092NV00",
-        "summary": "“梅姨案”传来最新进展，检察院已对“梅姨”提起公诉，案件正式进入审判阶段，打拐与团圆议题持续受关注。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 25,
-        "title": "央行、金融监管总局改革完善房地产信贷管理：个人住房贷款期限最长延至40年",
-        "url": "https://jrj.sh.gov.cn/jcgk-zcjd/20260831/1f94eb8dc9e94dfd8e044e548a85c769.html",
-        "summary": "两部门印发意见改革房地产信贷管理，开发贷实行主办银行制，个人住房贷款期限最长延至40年，现房销售贷新规落地。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 33,
-        "title": "人社部等部门发布11个新职业23个新工种：具身智能机器人应用技术员等入选",
-        "url": "https://ima.qq.com/wiki/?shareId=f742403b4f38aef633f61a2787b4fbf76bf9977b8b92c9d1fe8b6cc9de56a17b&amp;mediaId=markdown_753cbbb8464f67a340a883d38370a4da_eac06dd26323e73f4216ead616a130b57495595283478284&amp;action=openDetailDrawer&amp;webFrom=10000171",
-        "summary": "人社部等部门发布11个新职业23个新工种，涵盖具身智能机器人应用、运动数据分析等方向，映射产业升级方向。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 34,
-        "title": "社会救助法、医疗保障法两部民生重要法律通过，托育服务法等立法推进中",
-        "url": "https://ima.qq.com/wiki/?shareId=f742403b4f38aef633f61a2787b4fbf76bf9977b8b92c9d1fe8b6cc9de56a17b&amp;mediaId=markdown_753cbbb8464f67a340a883d38370a4da_eac06dd26323e73f4216ead616a130b57495595283478284&amp;action=openDetailDrawer&amp;webFrom=10000171",
-        "summary": "社会救助法、医疗保障法已通过，托育服务法、产业工人队伍建设法等正在推进，民生领域法治保障持续完善。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 35,
-        "title": "2026年全国时间利用调查启动，为民生政策提供“时间账本”",
-        "url": "https://new.qq.com/rain/a/20260903A092NV00",
-        "summary": "全国时间利用调查9月5日至25日开展，记录居民工作、学习与生活轨迹，为完善便民惠民政策提供统计依据。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 36,
-        "title": "“深圳校服”刷屏热搜，民生小事折射治理温度",
-        "url": "https://new.qq.com/rain/a/20260905A0AV0100",
-        "summary": "新学期“深圳校服”话题刷屏，统一款式、全城通用、百元定价与防透视标准引发全网讨论，被赞治理有温度。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 37,
-        "title": "广东等多地9月1日起上调最低工资标准",
-        "url": "http://www.xuwen.gov.cn/xwyw/shgz/content/post_2212534.html",
-        "summary": "广州、深圳月最低工资分别提至2680元、2700元，全省分三类标准执行，新就业形态劳动者同步纳入保障。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 38,
-        "title": "昆明盘龙江底原水管道爆管抢修，主城部分片区停水约72小时",
-        "url": "http://view.inews.qq.com/a/20260901A02ELZ00",
-        "summary": "昆明盘龙江底原水管道爆管，水厂停产抢修，主城部分片区停水约72小时，已部署应急送水车保障用水。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 39,
-        "title": "家庭病床、幼儿园收费规范、社保线上维权等多项民生新规实施",
-        "url": "https://m.toutiao.com/article/7674516258045379095",
-        "summary": "全国统一推开家庭病床医保报销，幼儿园收费明码标价禁收隐性费用，劳动者社保维权线上通道优化。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 40,
-        "title": "我国首部医疗保障法明年1月1日起施行",
-        "url": "https://www.nhsa.gov.cn/art/2026/8/31/art_14_21956.html",
-        "summary": "《医疗保障法》共7章56条，将于2027年1月1日起施行，为医保基金监管与参保人权益提供法律支撑。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 41,
-        "title": "158个基层病种将实现“同病同付”",
-        "url": "https://cpc.people.com.cn/BIG5/n1/2026/0830/c64387-40788777.html",
-        "summary": "国家医保局按病种付费3.0版分组方案即将发布，首批158个基层病种实现同病同付，减轻群众就医负担。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 42,
-        "title": "教育部等七部门发布《特殊教育发展提升“十五五”行动计划》",
-        "url": "https://edu.china.com.cn/2026-08/28/content_118668451.shtml",
-        "summary": "七部门印发特殊教育提升行动计划，提出2030年适龄残疾儿童义务教育入学率巩固在97%以上，推进数字化赋能。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 43,
-        "title": "教育部部署秋季开学重点工作，推进校园餐教辅校服“三项整治”",
-        "url": "https://so.html5.qq.com/page/real/search_news?docid=70000021_7776a91759440252",
-        "summary": "教育部召开全国中小学幼儿园秋季开学视频调度会，要求规范办学行为，常态化推进校园餐、教辅、校服整治。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "腾讯新闻",
-        "seq": 44,
-        "title": "石头缝里也能“种”出好日子 1.2万亩石堰梯田迎丰收",
-        "url": "https://news.qq.com/rain/a/LNK2026092605114000",
-        "summary": "1.2万亩石堰梯田迎来丰收，当地在石头缝里发展特色农业实现增收，展现乡村振兴与农业转型成果。",
-        "comments": "无法获取",
-        "value": "中性"
       },
       {
         "platform": "腾讯新闻",
         "seq": 45,
-        "title": "“中国足球小将”编导吕凡因交通意外去世，董路发文悼念",
-        "url": "https://news.qq.com/rain/a/20260926A003LG00",
-        "summary": "“中国足球小将”编导吕凡因交通意外去世，著名解说董路发文悼念，青少年足球从业者意外离世令人惋惜。",
+        "title": "高铁坐过站怎么办？可以免费坐回去",
+        "url": "https://news.qq.com/rain/a/20261007A039AV00",
+        "summary": "高铁坐过站可免费乘坐返程列车，铁路部门相关政策在假期返程高峰期间被普及，不少旅客表示第一次听说。",
         "comments": "无法获取",
         "value": "中性"
-      }
-    ],
-    "微博热搜": [
-      {
-        "platform": "微博热搜",
-        "seq": 26,
-        "title": "家长带孩子四处求医 病因就在家里",
-        "url": "https://s.weibo.com/weibo?q=%23%E5%AE%B6%E9%95%BF%E5%B8%A6%E5%AD%A9%E5%AD%90%E5%9B%9B%E5%A4%84%E6%B1%82%E5%8C%BB%E7%97%85%E5%9B%A0%E5%B0%B1%E5%9C%A8%E5%AE%B6%E9%87%8C%23",
-        "summary": "家长带孩子四处求医多年无果，最终发现病因竟出在家里环境，家庭健康隐患排查话题引发广泛讨论。",
-        "comments": "无法获取",
-        "value": "高价值"
       },
       {
-        "platform": "微博热搜",
-        "seq": 27,
-        "title": "网友710万卖房签合同瞬间泪崩",
-        "url": "https://s.weibo.com/weibo?q=%E7%BD%91%E5%8F%8B710%E4%B8%87%E5%8D%96%E6%88%BF%E7%AD%BE%E5%90%88%E5%90%8C%E7%9E%AC%E9%97%B4%E6%B3%AA%E5%B4%A9",
-        "summary": "网友710万元卖房签合同瞬间泪崩，房产变现背后的生活抉择与房价变化引发众多网友共鸣与讨论。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 28,
-        "title": "梅姨案被拐孩子钟彬吃百家饭长大",
-        "url": "https://s.weibo.com/weibo?q=%23%E6%A2%85%E5%A7%A8%E6%A1%88%E8%A2%AB%E6%8B%90%E5%AD%A9%E5%AD%90%E9%92%9F%E5%BD%AC%E5%90%83%E7%99%BE%E5%AE%B6%E9%A5%AD%E9%95%BF%E5%A4%A7%23",
-        "summary": "“梅姨案”被拐孩子钟彬被拐后吃百家饭长大，其成长经历曝光，案件进入审判阶段，寻亲故事牵动人心。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 29,
-        "title": "梅姨案被拐孩子钟彬被养父拉黑",
-        "url": "https://s.weibo.com/weibo?q=%23%E6%A2%85%E5%A7%A8%E6%A1%88%E8%A2%AB%E6%8B%90%E5%AD%A9%E5%AD%90%E9%92%9F%E5%BD%AC%E8%A2%AB%E5%85%BB%E7%88%B6%E6%8B%89%E9%BB%91%23",
-        "summary": "“梅姨案”被拐孩子钟彬寻亲后遭养父拉黑，认亲后的家庭关系纠葛引发热议，被拐儿童回归难题再受关注。",
-        "comments": "无法获取",
-        "value": "高价值"
-      },
-      {
-        "platform": "微博热搜",
+        "platform": "腾讯新闻",
         "seq": 46,
-        "title": "国家出手调控油价了",
-        "url": "https://s.weibo.com/weibo?q=%23%E5%9B%BD%E5%AE%B6%E5%87%BA%E6%89%8B%E8%B0%83%E6%8E%A7%E6%B2%B9%E4%BB%B7%E4%BA%86%23",
-        "summary": "国家出手调控油价的消息登上热搜，成品油价格调整直接影响出行成本，网友热议油价走势与民生影响。",
+        "title": "贵州毕节男子钓鱼时救起落水女童，婉拒家属登门答谢",
+        "url": "https://news.qq.com/rain/a/20261007A03GDI00",
+        "summary": "贵州毕节一男子钓鱼时救起落水女童，婉拒家属登门答谢，称救人是顺手的事，凡人善举温暖网络。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
-        "platform": "微博热搜",
+        "platform": "腾讯新闻",
         "seq": 47,
-        "title": "足球小将核心成员吕凡车祸离世",
-        "url": "https://s.weibo.com/weibo?q=%23%E8%B6%B3%E7%90%83%E5%B0%8F%E5%B0%86%E6%A0%B8%E5%BF%83%E6%88%90%E5%91%98%E5%90%95%E5%87%A1%E8%BD%A6%E7%A5%B8%E7%A6%BB%E4%B8%96%23",
-        "summary": "“中国足球小将”核心成员吕凡因车祸不幸离世，青少年足球界悼念，交通事故再度敲响安全警钟。",
+        "title": "八位外卖骑手，坐上了贵宾席",
+        "url": "https://news.qq.com/rain/a/20261007A02NC800",
+        "summary": "八位外卖骑手受邀坐上活动贵宾席，新就业群体的社会关注度提升，劳动者被尊重的细节引发网友好评。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
-        "platform": "微博热搜",
+        "platform": "腾讯新闻",
         "seq": 48,
-        "title": "中国人在写死亡的时候出奇的神",
-        "url": "https://s.weibo.com/weibo?q=%E4%B8%AD%E5%9B%BD%E4%BA%BA%E5%9C%A8%E5%86%99%E6%AD%BB%E4%BA%A1%E7%9A%84%E6%97%B6%E5%80%99%E5%87%BA%E5%A5%87%E7%9A%84%E7%A5%9E",
-        "summary": "话题探讨中文语境下书写死亡的独特表达与生死观，引发网友分享身边故事，文化讨论热度持续走高。",
+        "title": "全国社保基金：25年赚了2.3万亿元",
+        "url": "https://news.qq.com/rain/a/20261007A0000O00",
+        "summary": "全国社保基金公布成立25年来累计投资收益2.3万亿元，老百姓养老钱的保值增值成绩单受关注。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
-        "platform": "微博热搜",
+        "platform": "腾讯新闻",
         "seq": 49,
-        "title": "货车司机先递烟再拥抱施救",
-        "url": "https://s.weibo.com/weibo?q=%E8%B4%A7%E8%BD%A6%E5%8F%B8%E6%9C%BA%E5%85%88%E9%80%92%E7%83%9F%E5%86%8D%E6%8B%A5%E6%8A%B1%E6%96%BD%E6%95%91",
-        "summary": "货车司机遇险情先递烟安抚再拥抱施救，冷静又温情的操作被拍下传播，普通人善意举动获网友点赞。",
+        "title": "解码流动中国的活力与韧性——2026年国庆假期半程观察",
+        "url": "https://news.qq.com/rain/a/20261005A00BYU00",
+        "summary": "国庆假期跨区域人员流动量连续三天超3亿人次，铁路单日发送旅客创历史新高，文旅消费与公共服务迎来大考。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
-        "platform": "微博热搜",
+        "platform": "腾讯新闻",
         "seq": 50,
-        "title": "刘欢什么病",
-        "url": "https://s.weibo.com/weibo?q=%E5%88%98%E6%AC%A2%E4%BB%80%E4%B9%88%E7%97%85",
-        "summary": "刘欢病逝消息后“刘欢什么病”登上热搜，公众关注股骨头坏死等疾病诊治，健康科普需求集中爆发。",
+        "title": "旅游公路带火“奔县游”（新场景里看活力）",
+        "url": "https://news.qq.com/rain/a/20261007A030DN00",
+        "summary": "旅游公路建设带动“奔县游”走红，县域旅游成为假期新趋势，中小城市迎来文旅发展新机遇。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
-        "platform": "微博热搜",
+        "platform": "腾讯新闻",
         "seq": 51,
-        "title": "刘欢曾因股骨头坏死治疗",
-        "url": "https://s.weibo.com/weibo?q=%23%E5%88%98%E6%AC%A2%E6%9B%BE%E5%9B%A0%E8%82%A1%E9%AA%A8%E5%A4%B4%E5%9D%8F%E6%AD%BB%E6%B2%BB%E7%96%97%23",
-        "summary": "刘欢曾因股骨头坏死很少公开露面的经历被重提，相关疾病防治知识受到关注，网友纷纷科普提醒。",
+        "title": "视频丨返程客流持续走高 新能源车充电需求激增",
+        "url": "https://news.qq.com/rain/a/20261006A0B5FQ00",
+        "summary": "国庆返程客流持续走高，高速服务区新能源车充电需求激增，充电设施保障能力再次经受节假日大考。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
-        "platform": "微博热搜",
-        "seq": 52,
-        "title": "王楚钦不该承受恶劣舆论环境",
-        "url": "https://s.weibo.com/weibo?q=%23%E7%8E%8B%E6%A5%9A%E9%92%A6%E4%B8%8D%E8%AF%A5%E6%89%BF%E5%8F%97%E6%81%B6%E5%8A%A3%E8%88%86%E8%AE%BA%E7%8E%AF%E5%A2%83%23",
-        "summary": "运动员遭遇网暴的舆论环境话题引发热议，公众讨论粉丝文化与网络暴力的边界，呼吁理性观赛。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 58,
-        "title": "不要为付费过的关系提供情绪价值",
-        "url": "https://s.weibo.com/weibo?q=%E4%B8%8D%E8%A6%81%E4%B8%BA%E4%BB%98%E8%B4%B9%E8%BF%87%E7%9A%84%E5%85%B3%E7%B3%BB%E6%8F%90%E4%BE%9B%E6%83%85%E7%BB%AA%E4%BB%B7%E5%80%BC",
-        "summary": "情感话题登上热搜，网友讨论付费关系中的情绪价值边界，折射当下年轻人的社交与消费观念变化。",
-        "comments": "无法获取",
-        "value": "低价值"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 59,
-        "title": "全身为什么面部皮肤看起来最差",
-        "url": "https://s.weibo.com/weibo?q=%23%E5%85%A8%E8%BA%AB%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9D%A2%E9%83%A8%E7%9A%AE%E8%82%A4%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%9C%80%E5%B7%AE%23",
-        "summary": "健康科普话题登上热搜，解释面部皮肤状态差的原因与护理误区，网友热议护肤经验。",
-        "comments": "无法获取",
-        "value": "低价值"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 60,
-        "title": "板栗去壳原来这么容易",
-        "url": "https://s.weibo.com/weibo?q=%23%E6%9D%BF%E6%A0%97%E5%8E%BB%E5%A3%B3%E5%8E%9F%E6%9D%A5%E8%BF%99%E4%B9%88%E5%AE%B9%E6%98%93%23",
-        "summary": "生活技巧话题走红，板栗快速去壳方法简单实用，秋季应季食材处理方式获网友收藏转发。",
-        "comments": "无法获取",
-        "value": "低价值"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 61,
-        "title": "金毛两次假装有主人被识破",
-        "url": "https://s.weibo.com/weibo?q=%23%E9%87%91%E6%AF%9B%E4%B8%A4%E6%AC%A1%E5%81%87%E8%A3%85%E6%9C%89%E4%B8%BB%E4%BA%BA%E8%A2%AB%E8%AF%86%E7%A0%B4%23",
-        "summary": "金毛犬两次假装有主人试图“蹭家”被识破，趣闻走红网络，宠物话题轻松有趣引发围观。",
-        "comments": "无法获取",
-        "value": "低价值"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 62,
-        "title": "全网吃鱼最狠的人出现了",
-        "url": "https://s.weibo.com/weibo?q=%E5%85%A8%E7%BD%91%E5%90%83%E9%B1%BC%E6%9C%80%E7%8B%A0%E7%9A%84%E4%BA%BA%E5%87%BA%E7%8E%B0%E4%BA%86",
-        "summary": "“全网吃鱼最狠的人”视频走红，美食内容引发围观讨论，属于一般性生活趣味话题。",
-        "comments": "无法获取",
-        "value": "低价值"
-      },
-      {
-        "platform": "微博热搜",
-        "seq": 63,
-        "title": "成都一栋楼开成三角梅瀑布",
-        "url": "https://s.weibo.com/weibo?q=%23%E6%88%90%E9%83%BD%E4%B8%80%E6%A0%8B%E6%A5%BC%E5%BC%80%E6%88%90%E4%B8%89%E8%A7%92%E6%A2%85%E7%80%91%E5%B8%83%23",
-        "summary": "成都一栋楼被三角梅覆盖如瀑布，成为网红打卡点，城市美化景观话题吸引游客关注。",
+        "platform": "腾讯新闻",
+        "seq": 56,
+        "title": "服务贴心 假日舒心",
+        "url": "https://news.qq.com/rain/a/20261006A03UIX00",
+        "summary": "评论文章聚焦国庆假期各地公共服务精细化实践，从慢火车到无障碍设施，关照大客流中的小需求。",
         "comments": "无法获取",
         "value": "低价值"
       }
@@ -567,82 +414,181 @@ module.exports = {
     "今日头条": [
       {
         "platform": "今日头条",
-        "seq": 30,
-        "title": "养了17年发现儿子非亲生 男子自缢",
-        "url": "https://www.toutiao.com/trending/7689253499535900714/",
-        "summary": "男子抚养儿子17年后发现非亲生，不堪打击自缢，家庭伦理悲剧引发对婚姻诚信与亲子鉴定话题的热议。",
+        "seq": 21,
+        "title": "缅北白家涉诈超290亿",
+        "url": "https://www.toutiao.com/trending/7692694262311489067/",
+        "summary": "缅北白家涉诈金额超290亿元，家族式电诈集团涉案规模惊人，跨境电诈犯罪细节持续披露。",
         "comments": "无法获取",
         "value": "高价值"
       },
       {
         "platform": "今日头条",
+        "seq": 22,
+        "title": "缅北电诈主犯反问民警杀人要什么感受",
+        "url": "https://www.toutiao.com/trending/7693598861029458483/",
+        "summary": "缅北电诈主犯落网后反问民警“杀人要什么感受”，冷血态度令人发指，案件审理进展受关注。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 23,
+        "title": "演员王星4天被卖3次",
+        "url": "https://www.toutiao.com/trending/7693817772622745138/",
+        "summary": "演员王星被骗至妙瓦底4天遭转卖3次的遭遇曝光，跨境拐骗链条运作模式引发公众对出境安全的担忧。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 24,
+        "title": "缅北电诈窝点距我口岸仅200米",
+        "url": "https://www.toutiao.com/trending/7693753359924481563/",
+        "summary": "记者探访发现缅北电诈窝点距我方口岸仅200米，跨境电诈治理的复杂性与紧迫性凸显。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 25,
+        "title": "粤J2888T车主到郑州了",
+        "url": "https://www.toutiao.com/trending/7693331118632468489/",
+        "summary": "粤J2888T车主维权行程更新，已驾车抵达郑州，事件持续发酵，车辆定损纠纷真相待解。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 26,
+        "title": "中国警方：缅北电诈死灰复燃也不怕",
+        "url": "https://www.toutiao.com/trending/7692945943666249259/",
+        "summary": "中国警方表态缅北电诈死灰复燃也不怕，将持续打击跨境电诈犯罪，保护人民群众财产安全。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 27,
+        "title": "佘智江落网时嚣张妄言人脉能摆平",
+        "url": "https://www.toutiao.com/trending/7693798938138398234/",
+        "summary": "电诈头目佘智江落网时态度嚣张，妄言人脉能摆平一切，如今押解回国接受法律审判。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 28,
+        "title": "中国民警：要让缅北电诈血债血还",
+        "url": "https://www.toutiao.com/trending/7692711071282515499/",
+        "summary": "办案民警誓言要让缅北电诈血债血还，前线执法人员的决心背后是无数受害家庭的血泪。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 29,
+        "title": "万亿砸向高速充电桩 排队为何仍无解",
+        "url": "https://www.toutiao.com/trending/7693670812410187306/",
+        "summary": "万亿资金投向高速充电桩建设，节假日排队充电问题为何仍无解，充电设施布局与运营矛盾引发讨论。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 30,
+        "title": "电诈头目“江湖哥”佘智江出镜忏悔",
+        "url": "https://www.toutiao.com/trending/7693728840812658724/",
+        "summary": "电诈头目佘智江出镜忏悔，从嚣张到认罪态度反转，其背后电诈帝国的覆灭过程被详细披露。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 31,
+        "title": "电诈人员换董事长头像骗出纳1700万",
+        "url": "https://www.toutiao.com/trending/7693784534710747145/",
+        "summary": "电诈人员换上董事长头像冒充领导，骗走企业出纳1700万元，新型冒充类诈骗手法警示企业加强内控。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 32,
+        "title": "一线城市楼市新变化",
+        "url": "https://www.toutiao.com/trending/7692742529817198630/",
+        "summary": "一线城市楼市出现新变化，政策调整后市场情绪与成交量波动，购房者观望与入市的博弈持续。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 33,
+        "title": "王星案牵出跨境人口贩卖集团",
+        "url": "https://www.toutiao.com/trending/7693763568830857270/",
+        "summary": "演员王星案牵出跨境人口贩卖集团，从个体被骗到有组织犯罪，案件侦办范围不断扩大。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 34,
+        "title": "警务室岗亭有人赤膊蹦迪？派出所回应",
+        "url": "https://www.toutiao.com/trending/7693760587884527658/",
+        "summary": "网传警务室岗亭有人赤膊蹦迪引发围观，派出所回应核实处理，公务场所形象问题引热议。",
+        "comments": "无法获取",
+        "value": "高价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 52,
+        "title": "今年国庆“充电焦虑”为何不明显了",
+        "url": "https://www.toutiao.com/trending/7693432468476706854/",
+        "summary": "今年国庆假期新能源车“充电焦虑”明显缓解，充电桩建设成效显现，节假日出行补能体验改善。",
+        "comments": "无法获取",
+        "value": "中性"
+      },
+      {
+        "platform": "今日头条",
         "seq": 53,
-        "title": "月饼和螃蟹一起吃会中毒？假",
-        "url": "https://www.toutiao.com/trending/7689038155554541119/",
-        "summary": "中秋前后“月饼和螃蟹同吃中毒”传言流传，官方辟谣称不实，提醒公众理性看待食物相克类谣言。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "今日头条",
-        "seq": 54,
-        "title": "刚死不久的螃蟹还能吃吗",
-        "url": "https://www.toutiao.com/trending/7689446709818654758/",
-        "summary": "中秋吃蟹高峰期，“刚死不久的螃蟹还能吃吗”引发讨论，专家解读死蟹食用风险与储存建议。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "今日头条",
-        "seq": 55,
-        "title": "张雪包机带200人赴意大利观赛",
-        "url": "https://www.toutiao.com/trending/7689266384802709550/",
-        "summary": "张雪包机带200人赴意大利观赛引发关注，高消费观赛方式与体育消费话题成为讨论焦点。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "今日头条",
-        "seq": 56,
-        "title": "公司中秋晚会财务忙得像参加运动会",
-        "url": "https://www.toutiao.com/trending/7688681237160427574/",
-        "summary": "公司中秋晚会筹备中财务人员忙碌如参加运动会的段子走红，职场文化与节日加班话题引共鸣。",
+        "title": "警方辟谣四川五通桥一处楼房垮掉",
+        "url": "https://www.toutiao.com/trending/7693398644846215222/",
+        "summary": "网传四川五通桥一处楼房垮塌，警方及时辟谣，网络谣言治理与突发事件信息核实再引关注。",
         "comments": "无法获取",
         "value": "中性"
       },
       {
         "platform": "今日头条",
         "seq": 57,
-        "title": "“中国足球小将”编导吕凡意外去世",
-        "url": "https://www.toutiao.com/trending/7689377774973452339/",
-        "summary": "“中国足球小将”编导吕凡因交通意外去世，年仅不惑，青少年足球圈人士纷纷悼念。",
-        "comments": "无法获取",
-        "value": "中性"
-      },
-      {
-        "platform": "今日头条",
-        "seq": 64,
-        "title": "太原迎泽大桥成热门打卡点",
-        "url": "https://www.toutiao.com/trending/7689384761130860587/",
-        "summary": "太原迎泽大桥成为中秋假期热门打卡点，城市地标与假日出游话题带动本地文旅热度。",
+        "title": "新一轮油价调整时间定了",
+        "url": "https://www.toutiao.com/trending/7693613365381513755/",
+        "summary": "新一轮成品油价调整时间确定，油价走势牵动车主神经，出行成本变化受关注。",
         "comments": "无法获取",
         "value": "低价值"
       },
       {
         "platform": "今日头条",
-        "seq": 65,
-        "title": "明月映中秋 家国共此声",
-        "url": "https://www.toutiao.com/article/7689337926584386091",
-        "summary": "中秋主题报道呈现各地赏月团圆场景，家国情怀与传统文化话题营造节日氛围。",
+        "seq": 58,
+        "title": "直击国庆返程高峰路况",
+        "url": "https://www.toutiao.com/trending/7692925371944566822/",
+        "summary": "国庆假期返程高峰到来，多地高速迎来车流高峰，热门路段拥堵情况实时直击。",
         "comments": "无法获取",
         "value": "低价值"
       },
       {
         "platform": "今日头条",
-        "seq": 66,
-        "title": "媒体：月亮是最早的“朋友圈”",
-        "url": "https://www.toutiao.com/trending/7689323877717262377/",
-        "summary": "媒体发文称月亮是最早的“朋友圈”，盘点古人咏月表达思念的传统，引发网友中秋晒月共鸣。",
+        "seq": 59,
+        "title": "高速上以为错峰结果堵到怀疑人生",
+        "url": "https://www.toutiao.com/trending/7692686988817760275/",
+        "summary": "不少车主以为错峰出行结果高速堵到怀疑人生，假期出行博弈成为社交媒体热议话题。",
+        "comments": "无法获取",
+        "value": "低价值"
+      },
+      {
+        "platform": "今日头条",
+        "seq": 60,
+        "title": "节后逢寒露 养生主打“秋收敛藏”",
+        "url": "https://www.toutiao.com/trending/7693415004263235603/",
+        "summary": "节后迎来寒露节气，养生讲究“秋收敛藏”，气温下降注意添衣，健康生活方式受关注。",
         "comments": "无法获取",
         "value": "低价值"
       }
