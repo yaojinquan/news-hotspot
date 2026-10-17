@@ -1,7 +1,7 @@
 module.exports = {
   "version": 1,
   "collectDate": "2026年10月17日",
-  "generatedAt": "2026-10-17T12:29:25.910Z",
+  "generatedAt": "2026-10-17T14:12:23.698Z",
   "stats": {
     "platforms": [
       {
