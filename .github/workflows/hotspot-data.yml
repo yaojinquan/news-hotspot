@@ -52,4 +52,3 @@ jobs:
           git add miniprogram/data/data.json miniprogram/data/builtin.js
           git diff --cached --quiet || git commit -m "chore: update data.json [skip ci]"
           git push
-
