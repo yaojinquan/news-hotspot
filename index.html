@@ -43,6 +43,8 @@
   .vs-low .vs-num { color: #2f54eb; }
   .vs-mid { background: #f6ffed; }
   .vs-mid .vs-num { color: #52c41a; }
+  .vs-report { background: #f9f0ff; }
+  .vs-report .vs-num { color: #722ed1; }
 
   .legend {
     display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; font-size: 13px; color: #666;
@@ -55,7 +57,7 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     overflow: hidden; overflow-x: auto;
   }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 1500px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 1900px; }
   thead th {
     background: #1a1a2e; color: #fff; padding: 14px 12px;
     text-align: left; font-weight: 600; position: sticky; top: 0; z-index: 10; white-space: nowrap;
@@ -67,6 +69,7 @@
   thead th:nth-child(5) { min-width: 340px; }
   thead th:nth-child(6) { width: 110px; text-align: center; }
   thead th:nth-child(7) { width: 100px; text-align: center; }
+  thead th:nth-child(8) { min-width: 360px; }
   tbody tr { border-bottom: 1px solid #eef0f4; transition: background 0.15s; }
   tbody tr:hover { background: #f8f9fc; }
   tbody td { padding: 11px 12px; vertical-align: top; }
@@ -80,6 +83,19 @@
   td.summary { color: #555; line-height: 1.7; }
   td.comment-count { text-align: center; white-space: nowrap; }
   td.value { text-align: center; }
+  td.report { line-height: 1.7; }
+  .report-box summary {
+    cursor: pointer; color: #1890ff; font-size: 13px; font-weight: 600;
+    list-style: none; outline: none;
+  }
+  .report-box summary::-webkit-details-marker { display: none; }
+  .report-box summary::before { content: "B8 "; }
+  .report-box[open] summary::before { content: "BE "; }
+  .report-text {
+    margin-top: 8px; white-space: pre-wrap; color: #555; font-size: 13px;
+    background: #fafbfc; border-left: 3px solid #d9e6f2;
+    padding: 8px 10px; border-radius: 0 4px 4px 0;
+  }
 
   .cmt-badge {
     display: inline-block; padding: 2px 8px; border-radius: 4px;
@@ -155,7 +171,9 @@
     td.link-cell { display: none; }
     td.summary { color: #666; line-height: 1.6; font-size: 12px; }
     td.comment-count { white-space: normal; }
-    td.value { padding-bottom: 10px; border-bottom: none; }
+    td.value { padding-bottom: 10px; }
+    td.report { display: block; padding-bottom: 10px; border-bottom: none; }
+    .report-text { font-size: 12px; }
 
     .qr-img { width: 220px; height: 220px; }
     .donation-card { padding: 16px; }
@@ -170,17 +188,18 @@
 
 <div class="header">
   <h1>新闻平台热点 — 社会民生分类汇总</h1>
-  <div class="meta">采集时间：2026年10月14日 | 四平台 | 社会民生类 | 按价值度+评论数排序 | 含内容概要与价值度评估</div>
+  <div class="meta">采集时间：2026年10月17日 | 四平台 | 社会民生类 | 按价值度+评论数排序 | 含内容概要、评论报告与价值度评估</div>
 </div>
 
 <div class="stats">
-  <div class="stat-card"><div class="num">20</div><div class="label">网易新闻</div><div class="sub">高16 中4 低0</div></div><div class="stat-card"><div class="num">20</div><div class="label">腾讯新闻</div><div class="sub">高10 中7 低3</div></div><div class="stat-card"><div class="num">20</div><div class="label">微博热搜</div><div class="sub">高11 中9 低0</div></div><div class="stat-card"><div class="num">20</div><div class="label">今日头条</div><div class="sub">高8 中11 低1</div></div>
+  <div class="stat-card"><div class="num">13</div><div class="label">网易新闻</div><div class="sub">高8 中5 低0</div></div><div class="stat-card"><div class="num">11</div><div class="label">腾讯新闻</div><div class="sub">高7 中4 低0</div></div><div class="stat-card"><div class="num">11</div><div class="label">微博热搜</div><div class="sub">高6 中4 低1</div></div><div class="stat-card"><div class="num">12</div><div class="label">今日头条</div><div class="sub">高4 中7 低1</div></div>
 </div>
 
 <div class="value-summary">
-  <div class="vs-card vs-high"><div class="vs-num">45</div><div class="vs-label">高价值</div></div>
-  <div class="vs-card vs-mid"><div class="vs-num">31</div><div class="vs-label">中性</div></div>
-  <div class="vs-card vs-low"><div class="vs-num">4</div><div class="vs-label">低价值</div></div>
+  <div class="vs-card vs-high"><div class="vs-num">25</div><div class="vs-label">高价值</div></div>
+  <div class="vs-card vs-mid"><div class="vs-num">20</div><div class="vs-label">中性</div></div>
+  <div class="vs-card vs-low"><div class="vs-num">2</div><div class="vs-label">低价值</div></div>
+  <div class="vs-card vs-report"><div class="vs-num">13</div><div class="vs-label">评论报告</div></div>
 </div>
 
 <div class="legend">
@@ -206,728 +225,479 @@
   <th>内容概要</th>
   <th>评论数量</th>
   <th>价值度</th>
+  <th>评论报告</th>
 </tr>
 </thead>
 <tbody>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">1</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L95GFPAS051492LM.html" target="_blank">河北一公安局副局长在办公室被带走 最新进展来了</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L95GFPAS051492LM.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">河北某公安局副局长在办公场所被带走调查，事件持续发酵，最新进展引发公众对基层执法权力监督的关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9EGDMSC0514R9OJ.html" target="_blank">女子病世男友为其母养老送终 老人外甥女要求继承500万</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9EGDMSC0514R9OJ.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">女子在男友病逝后替其母亲养老送终，老人外甥女却提出继承约500万元遗产，情义付出与法定继承的冲突引发伦理争议。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">150条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约451字）</summary><div class="report-text">这是当日讨论最热烈的家庭伦理话题（150条评论），主线高度一致：声援“女婿”、批评外甥女。最高赞“这个外甥女真特么的！！”（189赞）、“要是500万元债务，外甥女早就躲起来了”（134赞）、“金钱就是照妖镜”（61赞），情绪几乎一边倒；第二条主线是认可判决，“这才是正规法院”（168赞）。真正的争论点藏在热门楼里：有人质疑动机——“老人要是没遗产，这人还会照顾她吗”（18赞主楼引来26条回复），随即被“论迹不论心”（84赞）和“最起码人家实实在在付出了”（28赞）压下去；还有人较真概念——“你会立遗嘱给保姆吗？”（21赞），以及围绕亲属称谓的纠错楼（24条回复）。可用素材：同居十余年、老人摔跤骨折时“无人问津”的对照、遗赠扶养协议加公证赠与的双保险、法院引用民法典认定协议优先于法定继承的裁判逻辑；“论迹不论心”四个字本身就是金句。文章切入点：从“论迹不论心”写继承伦理——法律保护的是履约的人，不是攀亲的人；情义不该成为漏洞，也不该被事后算计。争议小、共识大，传播力强、素材度高、安全度高。</div></details></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">2</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L96INR7M0001899O.html" target="_blank">父亲配眼镜说四千多 母亲翻出另一张单据女儿觉得不对</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L96INR7M0001899O.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">父亲称配镜花费四千余元，母亲翻出另一单据引发女儿质疑，家庭消费透明度与商家定价问题成焦点。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9E8D8QG0514R9OJ.html" target="_blank">上海女子沉迷自制酵素每桶75公斤30桶堆满屋 邻居慌了</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9E8D8QG0514R9OJ.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">上海一女子沉迷自制酵素，每桶约75公斤、共30桶堆满房屋，异味与安全隐患令邻居担忧，多次沟通无果后邻里矛盾激化。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">118条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约464字）</summary><div class="report-text">评论区情绪浓度极高（118条）。压倒性主线是猎奇与吐槽：“病得不轻，药不能停”（382赞）、“这不就是个神经病嘛，做这么多用一辈子么”（205赞）、“又是一个被养生之道祸害走火入魔的”（140赞）——引用最后一条时须收敛为“对养生偏方的质疑”，避免放大对个体的人身攻击。次主线是技术流讨论：楼板承重（“每平米200kg，浴缸都不能用了”76赞；也有人较真“75公斤也就一个成人重量”，被“注意集中堆放”驳回去）；发酵安全（“5楼怕被砸死了，当然得上心”74赞）。真正的争论点在热门楼里：个人生活自由与公共安全的边界——有人拿手搓爱好者类比鸣不平（24赞），被反问“这些都不是在居民楼里搓的”（11赞）；执法队上门处置算不算过度干预也被隐含讨论。可用素材：30桶×75公斤、2014年起十年囤积、酵素桶爆炸的既有案例、住宅楼面每平米2.0kN的设计活荷载标准、“天然等于安全”的认知误区。文章切入点：不嘲讽个体，写“一套养生执念如何变成整栋楼的安全隐患”，兼顾科普与邻里权益，落点是社区治理如何托底。传播力强、素材度高、安全度高。</div></details></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">3</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L95H3VC405561G0D.html" target="_blank">男子花6万多元买茅台一箱为假 烟酒店：他是恶意购买</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L95H3VC405561G0D.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">男子花6万余元购入一箱茅台却发现为假，烟酒店反指其恶意购买，真假之争与维权边界引发热议。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A05ZVP00" target="_blank">黄奇帆被查、包惠被开除党籍，中纪委：搞腐败没有任何退路</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A05ZVP00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">中央纪委通报黄奇帆被查、包惠被开除党籍，强调不论职务高低、贡献大小、退休与否，搞腐败没有任何退路和平安着陆。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">72条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约420字）</summary><div class="report-text">评论一边倒支持反腐，主线清晰：坚决拥护打虎治党（最高赞101），强调“全覆盖、零容忍、决不姑息”（94赞）。第二条主线聚焦人设反差——“黄奇帆的落马确实没想到，退休后到处演讲，给人懂金融、懂市场、懂经济的专家学者型官员人设”（79赞），跟评出现“不懂这些也做不了直辖市的市长”（35赞）的小争论；第三条主线转向制度反思——“要做好日常监督考察，重在防患未然”（66赞）、“击碎退休平安着陆的幻想，权力监督需要贯穿履职全程”（43赞）。争论点：退休多年是否还应追责、专家型官员的公众形象是否构成监督盲区。注意：评论区存在要求极刑的激烈言论，引用时只作“呼声存在”处理、不放大。可用素材：“不论职务高低、贡献大小、退休与否”的官方表述、人设与案件的反差、66赞那条日常监督的呼声。文章切入点：从“退休不是护身符”写反腐的制度逻辑——公众记住的往往是讲话时的风采，案件通报提醒的是权力全程在轨道上。紧跟官方通报口径，传播力强、素材度中、安全度高。</div></details></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">4</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L95LI633051492LM.html" target="_blank">男子去姐姐家调解夫妻矛盾 不到1分钟被姐夫持刀刺死</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L95LI633051492LM.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">男子前往姐姐家调解夫妻矛盾，不料不到一分钟被姐夫持刀刺死，家庭纠纷升级为血案的悲剧令人唏嘘。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9D81E6U0514R9P4.html" target="_blank">男生在校内坠亡家长索赔170万：从天台爬回公寓出意外</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9D81E6U0514R9P4.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一名男生在校内从天台爬回公寓时意外坠亡，家长向校方索赔170万元，校园安全防护责任与赔偿标准成为争议焦点。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">69条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约475字）</summary><div class="report-text">争议激烈（69条评论），责任归属呈三方拉扯。主线一：归因家庭——最高赞直指“又是老人带小孩引起的……孩子都17岁了，完全可以独立了”（64赞），“17岁的孩子连把钥匙都不给！！！”（41赞）把矛头对准外公外婆的管理方式，跟评里有人拆分责任“八分在孩子自己，两分在外公外婆”。主线二：归因教育制度——“早点放暑假，啥事没有，学校该醒醒了”（40赞）、“终于不用刷卷子了”（43赞），带着对暑期补课文化的积怨。主线三：理性派主张“悲剧背后不能简单归咎一方，校园安全不能只盯着教室”（33赞），却被反驳“用一个孩子的死给教育制度扣帽子”（10赞）。争论点：学校对租住校内教师公寓的学生负有多大安全义务？人道主义补偿40万元是否等于变相认责？暑期返校安排与事故的因果链是否成立？可用素材：那把被带走的钥匙、402室拍门撞门的经过、天台回房的决定瞬间、40万补偿与170万索赔的差距。文章切入点：从“一把缺位的钥匙”写责任分配——意外之后每个人都想找到该负责的那个人，但法律只认职责边界。涉未成年人身故，落笔须克制、不消费悲剧。传播力强、素材度高、安全度中等。</div></details></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">5</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L95FM5810514D3UH.html" target="_blank">男子用ATM机给自己手机账号转账 钱却进了别人账户</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L95FM5810514D3UH.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">男子通过ATM机向自己手机账号转账，资金却误入他人账户，银行操作漏洞与追责难题引发关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9DEULKN051492LM.html" target="_blank">曾因私人恩怨被董宇拉黑的“榜一大哥” 要补税7.9亿元</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9DEULKN051492LM.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">曾因私人恩怨被主播拉黑的“榜一大哥”被曝需补税7.9亿元，直播打赏巨额资金背后的税务合规与财富来源受到关注。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">58条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约455字）</summary><div class="report-text">讨论完全越过标题的“榜一大哥”梗，矛头直指涉事公司的网贷前科。最高赞一针见血：“别以为是讲义气，是上市公司不得已的风险自保，一旦无力缴纳会牵连公司引发股价和合规危机”（421赞）；第二条主线是对放贷生意的集体记忆——“这种靠放高利贷存活的公司还是让它消失为好，税务要狠狠地查”（172赞），热楼里“是不是又是一家诈骗公司”（120赞）引来“胆子大一点，前三个字去掉”（121赞）的辛辣回复，还有人补充其校园分期贷款的历史（2赞）。第三条主线更有争议性：“今天没钱杀大户，大户杀完就开始杀平头了”（160赞），跟评出现对税务执法范围扩大的担忧。争论点：公司替个人代缴税款算不算风险隔离？税务合规收紧是好事还是“选择性执法”？可用素材：7.9亿元税单、代持股权被穿透认定的原理、“税务不看名义看实际利益归属”的新规逻辑、同期另一家公司为缴税减持套现5亿。文章切入点：借“代持穿透”写财富合规时代的到来——名义登记不再是护身符。注意涉企业历史问题的表述须以公开报道为准、不做人身定性。传播力强、素材度高、安全度中等。</div></details></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">6</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L96E4LQK0556IK61.html" target="_blank">“吃相，长相到面相，没一个顺眼的！”宝妈晒女儿吃饭被骂惨</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L96E4LQK0556IK61.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">宝妈在社交平台晒女儿吃饭日常，却遭网友攻击外貌与吃相，网络暴力与儿童隐私保护话题再引争议。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9EQ33CP0001899O.html" target="_blank">多人投诉多邻国APP：试用会员到期被偷偷扣掉738元</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9EQ33CP0001899O.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">多名用户投诉多邻国APP在免费试用会员到期后未作明确提示即自动扣费，单人被扣738元，自动续费乱象与消费者知情权问题引发关注。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">40条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约422字）</summary><div class="report-text">讨论主线围绕“自动续费到底怪谁”展开。一派认为用户应自己留意取消，有人留言称“试用结束前你没取消它才会扣钱”，但最高赞回复“谁会记得”（36赞）直接反转了立场；还有人吐槽提醒邮件混在广告堆里被当成垃圾邮件。第二条主线是声讨“流氓条款”，有评论称不该允许自动续费这种条款存在（12赞）；第三条主线是举一反三，有人类比其他电商平台的类似套路（11赞），还有人总结“所有试用的都是这个套路，赌的就是你没有及时取消”（9赞）。争论点：平台的“显著提醒”义务边界在哪里——软件内系统通知算不算显著提示？苹果与软件方互相推诿，退款责任究竟谁担？可用素材：738元的扣款金额、维权平台30万条相关投诉、新规实施两年多仍乱象不止的对照，以及用户“因为看到提醒承诺才没关续费”的信任落差——这个细节最有共鸣。文章切入点：从“谁会记得”这句高赞回复切入，写试用期经济的精算本质——平台赌的就是遗忘。传播力强、素材度高、安全度中等（点名平台须以实测与投诉事实为准）。</div></details></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">7</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3J13MOV0525CHJG.html" target="_blank">西安通报赛格商场与坠楼者纠纷情况</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3J13MOV0525CHJG.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">西安官方就赛格商场与坠楼者之间的纠纷发布情况通报，公共安全、商场责任与善后处理成为关注焦点。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A06W6Y00" target="_blank">两人取保、监居期间又作案13起 主办民警被判玩忽职守罪免予刑事处罚</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A06W6Y00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">两名犯罪嫌疑人在取保候审、监视居住期间又作案13起，主办民警因监管失职被判玩忽职守罪但免予刑事处罚，判决引发争议。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">29条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约442字）</summary><div class="report-text">争议焦点高度集中（29条评论）。主线一：质疑量刑——“为什么会免于刑事处罚？？？”（12赞最高）、“免予刑事处罚算惩戒吗？哈哈”（10赞）、“造成严重二次伤害，还能免予刑罚？这算不算轻判了？”（8赞）；主线二：有人解释制度逻辑——热评回复指出“玩忽职守罪本身法定刑不高，加之杨某有坦白、认罪悔罪情节”，也有评论为民警鸣不平“犯人主观要去犯罪，警察难道还得天天跟在后面”（0赞）；还有评论主张“执法人员犯法更要追究法律责任”（4赞）。争论点：免予刑事处罚究竟是不是“没惩罚”？玩忽职守罪对公职人员是否天然偏轻？13起新罪与个人刑罚之间如何裁量因果？可用素材都在判决书里：明知依法应批捕却不报捕、伪造“疫情看守所不收押”的理由、监视居住决定书寄出后没收到回执也从未查问——这些细节比评论本身更有冲击力。文章切入点：从“免予刑事处罚”六个字写追责的边界——罪与非罪之外，还有一个更难回答的问题：谁来为监管空档里的受害者负责？以判决书事实为准、避免煽动警民对立。传播力强、素材度高、安全度中。</div></details></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">8</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3IVVVD3051482LC.html" target="_blank">西塔老太太烤肉辣椒面里发现活蠼螋 店方赔了一千元又请顾客再吃一顿</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3IVVVD3051482LC.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">顾客在西塔老太太烤肉调料中发现活虫，店方赔偿千元并邀请再就餐，食品安全与商家危机应对引发讨论。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9EIH8DQ05561G0D.html" target="_blank">武汉盛帆女篮与华中科技大学女篮热身赛爆发大规模冲突</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9EIH8DQ05561G0D.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">武汉盛帆女篮与华中科技大学女篮热身赛爆发大规模冲突，场面失控，高校队员事后在电梯内复盘打人细节的视频曝光，体育作风受质疑。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-low">13条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约437字）</summary><div class="report-text">评论量不大（13条）但几乎一边倒。主线一：追责声浪——“严惩高校篮球队”（6赞）、“这应该要追刑责了，报案啊”（5赞）、“既然监控里自己都承认了，那必须刑事处理”（4赞）、“丢华中科技大学的脸”（3赞）；主线二：质疑俱乐部“打不还手”准则本身——最高赞“为什么要打不还手？”（9赞）、“打球不行打架第一，感觉国内很多比赛都这样”（8赞）。争论点非常集中：俱乐部重罚了自家“先动手”的球员（罚款1万、禁赛5场、撤销队长职务），而被曝光在电梯里复盘“我上去就给她三拳，朝她脑袋打”“踩着脸”的高校一方，至今没有公开处理结果——处罚的轻重反差就是最大的舆论爆点。次级争论：热身赛的执裁尺度与大动作犯规的放任。可用素材：电梯监控原话、缝合4针的伤情、俱乐部通报全文与“健康第一、球迷第二、比赛第三”的理念表述。文章切入点：从“电梯里的复盘”写竞技体育的胜负观错位——冲突会过去，监控里的原话不会。高校一方回应缺位，写稿时注意事实边界、等官方处理结论。传播力强、素材度中、安全度中高。</div></details></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">9</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3ITRH73055612K8.html" target="_blank">物业费从2.2元涨到5.95元，九成业主还举手赞成</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3ITRH73055612K8.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">某小区物业费从2.2元涨至5.95元，竟获九成业主赞成，物业服务升级与业主自治模式引发广泛关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/UTR2026101714638600" target="_blank">“耻辱”合影事件后，四川雷波县将迎来新县长</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/UTR2026101714638600" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">四川雷波县“耻辱”合影事件发酵后迎来人事调整，杨开金出任县委副书记，该县将迎来新县长，基层形象治理受关注。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-low">10条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约392字）</summary><div class="report-text">评论仅10条、点赞均为0，讨论热度一般，观点较分散，成文时不宜过度概括。主线一：把个案上升为对地方治理水平的整体质疑——最完整的一条评论反讽道“穷有穷的道理，以为的国家级贫困县是白来的吗？是有人一直在努力”，把合影事件与当地长期发展困境勾连；主线二：对新任领导既有期待也有保留——“初衷不坏，方法要求改进”“人才，同时也是敢于面对”“久经考验的人民服务员”；也有人认为“林子大了什么鸟都有”，倾向淡化个案。争论点：合影事件反映的是干部作风问题，还是资源禀赋与观念问题？人事调整是回应舆论的必要动作，还是会流于“换人平事”？评论样本小，两种立场都只是零星表达。可用素材：反讽式评论的措辞、“耻辱合影”发酵与新县长到任的时间线、雷波县此前的舆情背景。文章切入点：从“一张合影换来的县长变动”写基层形象治理——舆论可以推动人事，但修复信任靠的是日常治理的细节。素材度低、传播力中、安全度高。</div></details></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">10</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3IK8R6U05129QAF.html" target="_blank">传销头目出狱后开办国学书院，家长被洗脑称孩子挨打才有效果</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3IK8R6U05129QAF.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">传销头目出狱后开办国学书院，向家长灌输体罚式教育理念，监管盲区与家庭教育焦虑问题再被提起。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A048MB00" target="_blank">女子玩“飞拉达”被马蜂蜇伤180多处，事发50余天仍未谈妥赔偿</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A048MB00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一女子游玩“飞拉达”铁道式攀岩项目时被马蜂蜇伤180多处，事发50余天仍未与运营方谈妥赔偿，户外项目安全责任认定受关注。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-low">10条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约434字）</summary><div class="report-text">评论10条，立场分化明显。主线一：倾向营地一方——“纯属意外，讹人就没劲了，野生动物还好说，野生蜜蜂谁控制得了”（3赞最高），把事件定性为不可抗力；主线二：主张营地担责——“飞拉达项目岩壁缝里很容易藏马蜂窝，不能等游客被蛰伤之后才去清理，营地不能光把重心放在招揽客人赚钱”；主线三：风险自担提醒——“玩这类高空探险项目，千万不要光图刺激，上去之前多留意周边环境”。还有评论追问关键问题：“马蜂窝是外来野蜂形成、并非营地搭建，会直接免除营地安全保障责任吗？”回复引用律师解读明确“不能直接免除”。争论点：野蜂是否构成不可抗力从而免除经营者责任？营地方“先拿费用依据再谈赔”是合理核损还是拖延策略？可用素材：180余处蜇伤、悬空钢索上失去意识、住院21天、50余天僵局、律师“责任认定与金额核算不能混为一谈”的解读。文章切入点：从“谁控制得了野蜂”这句反问写高风险项目的责任链条——意外不等于免责，举证不是拒绝赔付的理由。科普加维权双线并行，传播力中、素材度高、安全度高。</div></details></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">11</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3IEL8MM0530JPVV.html" target="_blank">“全部删除！”妈妈翻看女儿电话手表后爆发大吵</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3IEL8MM0530JPVV.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">妈妈翻看女儿电话手表后爆发争吵，要求删除陌生联系人，亲子信任与未成年人社交边界话题引发共鸣。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9EPSJT80001899O.html" target="_blank">女子账户“多”出143万正准备偷偷操作 被警方突然拦下</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9EPSJT80001899O.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一名女子发现银行账户突然多出143万元，正准备悄悄处置时被警方拦下，巨额来路不明资金的性质与她的处理方式引发热议。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-low">8条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约450字）</summary><div class="report-text">评论量不大（8条），但态度分层清晰。主线一：对骗局本身的嘲讽——“每日签到奖励8万元、领取学习奖励5万元……还真有人信”（3赞）；主线二：借题发挥联想同类套路，最高赞是“这套骗术拼多多用得最6”（15赞），把签到领现金的营销设计与诈骗话术相提并论；主线三：追问信息与资金安全——“被监控了？”（8赞）、“银行被攻陷了？安全在哪里？”（3赞），也有冷言“之后又出来哭穷”。争论点：中老年人为何屡屡掉进“国家项目”式骗局——是贪念、孤独还是信息差？平台方与通讯渠道的把关责任被简短提及但未展开。可用素材：143万元的虚拟余额、“国家秘密发放AI算力资金”的话术、“泄密将取消名额”的恐吓闭环，以及民警现场算的那笔账——1800万亿除以14亿人，人均约128万，仅靠签到就能日进数万显然违背常识，这个“算账拆穿”的细节天然适合做文眼。文章切入点：反诈题材叠加AI热词，可从“AI算力”概念被诈骗团伙包装成国家项目写起，落到老年人数字防线的家庭责任。传播力中上、素材度中、安全度高（警方通报来源，正面叙事）。</div></details></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">12</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L319JOMS0550HXM1.html" target="_blank">保姆因无法生育，拐走雇主家10月龄男婴35年</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L319JOMS0550HXM1.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">保姆因自身无法生育拐走雇主10个月大男婴，35年后案发，家庭伦理悲剧与拐卖儿童犯罪惩处引发热议。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A04X3200" target="_blank">49岁男子冒用女儿信息网上交友谎称父母双亡8年骗得老汉56万元获刑十年</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A04X3200" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一49岁男子冒用女儿身份信息网上交友，谎称父母双亡博取同情，8年间骗得一名老汉56万元，被判处有期徒刑十年。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-low">5条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约406字）</summary><div class="report-text">评论仅5条、几乎没有争论，共识明确。主线：防骗提醒——“网上聊得再投缘，只要开口要钱，就要多打个问号。很多骗子就是打感情牌，用亲情、兄妹关系做掩护，慢慢掏空你的积蓄”（1赞最高）；“很多养老诈骗并不是一上来就大额骗钱，是靠细水长流的情感铺垫，一点点瓦解防备心理，这也是这类骗局最难识破的地方”——这两条评论把情感诈骗的“节奏感”讲得非常透，适合做素材。次主线：感慨刑期——“八年精心伪装，利用他人同情心行骗，十年刑期罪有应得”。可用素材：65岁老人与“23岁女大学生”的年龄反差、56万余元的转账总额、“修手机、看病、给父母修坟墓”这类具体话术、还款时以自杀相威胁的手段，以及“诈骗老年人且多次实施可酌定从重处罚”的裁判理由。文章切入点：面向中老年读者及其子女的反诈选题，从“网络妹妹”的八年剧本拆解情感诈骗如何用小钱建立信任、再以大额理由收割；提醒“只要开口要钱就要多打个问号”。素材度中、传播力中、安全度高。</div></details></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">13</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3FUOV3K0530JPVV.html" target="_blank">女子举报985高校博士后在妻子孕期出轨，隐瞒已婚事实与自己交往</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3FUOV3K0530JPVV.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">女子举报985高校博士后在妻子孕期出轨并隐瞒婚姻，学术圈道德与人格权纠纷成为舆论焦点。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A06MJK00" target="_blank">全家便利店员工被指在公厕拖把池洗锅，总部客服回应</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A06MJK00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">全家便利店员工被拍到在公厕拖把池内洗锅，总部客服回应将联系门店核实，食品安全与门店卫生管理受到质疑。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-low">4条</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><details class="report-box"><summary>展开评论报告（约394字）</summary><div class="report-text">评论仅4条，但观点有层次，几乎无情绪对立。主线一：归因于管理与设施——“员工这么干，要么是店里专用清洗设施不到位，要么就是日常管理培训流于形式，连锁品牌都有明文卫生操作规范，可到了单店实际执行就走样”；主线二：从经营节奏找原因——“地铁站周边的便利店人流量大、出餐节奏快，员工忙起来容易图省事，很多食品安全问题都不是主观故意”；主线三：少数质疑爆料真实性——“这恐怕是商业抹黑吧，我不敢相信有人这么坏”，说明视频曝光类舆情天然伴随真伪之争。争论点：单店的卫生违规该由品牌总部承担多大责任？视频监督与商业抹黑的边界在哪里？可用素材：茶叶蛋锅与拖把池共用的画面反差、爆料人“平时经常看到才拍下”的陈述、总部“暂未关注到”的回应时滞、12345已介入的事实。文章切入点：从“锅和拖把共用一个池子”写连锁体系的卫生执行末梢——规范写在总部文件里，风险藏在单店水槽里。素材度中、传播力中、安全度高。</div></details></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">14</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3159AIF05568W0A.html" target="_blank">一家三口打赏主播650万后甩锅孩子</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3159AIF05568W0A.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">一家三口累计打赏主播650万元后试图将责任推给孩子，巨额直播打赏与家庭财产保护问题引发关注。</td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9EPON9Q0512B07B.html" target="_blank">广东汕头重大火灾事故调查报告公布：蚊香使用不慎引发，致12人死亡</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9EPON9Q0512B07B.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">汕头重大火灾事故调查报告公布，认定系蚊香使用不慎引发，最终导致12人死亡，事故责任认定与后续整改措施随之公布。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">15</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L30VR3KS0550EB0R.html" target="_blank">吓到腿软，电梯突然失控从31楼下坠到负2楼</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L30VR3KS0550EB0R.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">小区电梯突发故障从31楼下坠至负2楼，居民惊魂未定，电梯维保与老旧小区公共安全再被追问。</td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A06W2Q00" target="_blank">甘肃省委：坚决查办“窝案”“串案”，坚决清除“蝇贪蚁腐”</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A06W2Q00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">甘肃省委要求坚持办案开路，坚决查办“窝案”“串案”，全力“揭盖子”“挖根子”，清除“蝇贪蚁腐”，基层反腐持续深入。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">16</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L31AAH890514R9OJ.html" target="_blank">辣眼睛！三伏天公园又现“赤裸晒背”</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L31AAH890514R9OJ.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">公园内再次出现居民赤裸晒背现象，有人视为个人自由，有人觉得不雅观，公共空间行为边界引发争议。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E6%8B%BF%E6%89%93%E5%B7%A5%E4%BA%BA%E8%A1%80%E6%B1%97%E9%92%B1%E7%BB%99%E5%A5%B3%E5%84%BF%E9%93%BA%E6%98%9F%E8%B7%AF%23&amp;t=31&amp;band_rank=1&amp;Refer=top" target="_blank">拿打工人血汗钱给女儿铺星路</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E6%8B%BF%E6%89%93%E5%B7%A5%E4%BA%BA%E8%A1%80%E6%B1%97%E9%92%B1%E7%BB%99%E5%A5%B3%E5%84%BF%E9%93%BA%E6%98%9F%E8%B7%AF%23&amp;t=31&amp;band_rank=1&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">女艺人盛艾敬被曝父母长期拖欠员工薪资，用打工人血汗钱供养其出道铺星路，欠薪企业与艺人家庭背景的关联引发全网声讨。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">17</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261013A0DW2400?adChannelId=news" target="_blank">患者送药房人员1.9元汽水后举报对方违规收礼？涉事医院回应</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261013A0DW2400?adChannelId=news" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">患者送给药房人员一瓶1.9元汽水后举报其违规收礼，涉事医院作出回应，医患关系与举报边界引发讨论。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E7%8F%AD%E4%B8%BB%E4%BB%BB%E4%BC%91%E4%BA%A7%E5%81%87%E5%AE%B6%E9%95%BF%E7%A7%B0%E4%B8%80%E5%AE%9A%E8%A6%81%E7%94%9F%E5%AD%A9%E5%AD%90%E5%90%97%23&amp;t=31&amp;band_rank=8&amp;Refer=top" target="_blank">班主任休产假家长称一定要生孩子吗</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E7%8F%AD%E4%B8%BB%E4%BB%BB%E4%BC%91%E4%BA%A7%E5%81%87%E5%AE%B6%E9%95%BF%E7%A7%B0%E4%B8%80%E5%AE%9A%E8%A6%81%E7%94%9F%E5%AD%A9%E5%AD%90%E5%90%97%23&amp;t=31&amp;band_rank=8&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">班主任休产假后家长抱怨频繁换老师，称“一定要生孩子吗”，教师生育权益与教学连续性的矛盾引发激烈争论。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">18</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261013A0E6MD00?adChannelId=news" target="_blank">女子偶然发现微信列表9年未联系的人，竟用自己真名当多个社交平台昵称</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261013A0E6MD00?adChannelId=news" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">女子发现九年未联系的前合租人用自己真名作为多平台昵称，担心被冒用身份诈骗，已报警处理。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E8%80%81%E4%BA%BA%E8%A2%AB%E4%B8%AD%E4%BB%8B%E5%93%84%E9%AA%97220%E4%B8%87%E6%88%BF%E5%8F%AA%E5%8D%9670%E4%B8%87%23&amp;t=31&amp;band_rank=29&amp;Refer=top" target="_blank">老人被中介哄骗220万房只卖70万</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E8%80%81%E4%BA%BA%E8%A2%AB%E4%B8%AD%E4%BB%8B%E5%93%84%E9%AA%97220%E4%B8%87%E6%88%BF%E5%8F%AA%E5%8D%9670%E4%B8%87%23&amp;t=31&amp;band_rank=29&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一老人卖房时被中介哄骗，市值220万元的房子仅以70万元成交，涉老房产交易欺诈与行业监管缺位问题受到关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">19</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261013A0DMIJ00?adChannelId=news" target="_blank">宁波29岁男子周末下馆子，每次吃完口渴狂喝水</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261013A0DMIJ00?adChannelId=news" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">29岁男子每次在外就餐后都口渴狂喝水，就医发现餐馆菜肴高钠，外卖与下馆子食品安全问题再被关注。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E4%BA%AC%E5%9F%8E%E5%A4%A7%E5%B8%88%E8%B5%9B%E8%A2%AB%E6%9B%9D%E8%A3%B8%E6%A3%80&amp;t=31&amp;band_rank=38&amp;Refer=top" target="_blank">京城大师赛被曝裸检</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E4%BA%AC%E5%9F%8E%E5%A4%A7%E5%B8%88%E8%B5%9B%E8%A2%AB%E6%9B%9D%E8%A3%B8%E6%A3%80&amp;t=31&amp;band_rank=38&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">有参赛者爆料“京城大师赛”对选手实施“裸检”，赛事组织被指侵犯人格尊严，赛事资质与监管乱象受到质疑。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">20</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02R6X00" target="_blank">福建泉州一审宣判魏家犯罪集团系列案 3人死刑58人获刑</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02R6X00" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">福建省泉州市中级人民法院一审宣判魏家犯罪集团系列案，三人被判死刑，五十八人分别获刑，打击跨境犯罪力度受关注。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E8%91%A3%E4%BA%8B%E9%95%BF%E5%9B%9E%E5%BA%94%E4%B8%8E%E5%A5%B3%E5%AD%90%E7%94%9F%E5%8F%8C%E8%83%9E%E8%83%8E%E6%97%A0%E6%B3%95%E8%90%BD%E6%88%B7%23&amp;t=31&amp;band_rank=24&amp;Refer=top" target="_blank">董事长回应与女子生双胞胎无法落户</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E8%91%A3%E4%BA%8B%E9%95%BF%E5%9B%9E%E5%BA%94%E4%B8%8E%E5%A5%B3%E5%AD%90%E7%94%9F%E5%8F%8C%E8%83%9E%E8%83%8E%E6%97%A0%E6%B3%95%E8%90%BD%E6%88%B7%23&amp;t=31&amp;band_rank=24&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一董事长公开回应与婚外女子生下双胞胎却无法落户，非婚生育、亲子关系认定与落户政策成为争议焦点。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">21</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02R6X00" target="_blank">男子在悬空寺古建筑横梁做引体向上被立案</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02R6X00" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">网传男子在悬空寺古建筑横梁上做引体向上，景区通报公安机关已立案调查，文物保护与游客行为边界引热议。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E5%9B%BD%E7%BD%91%E8%B5%B7%E8%AF%89%E6%B9%96%E5%8D%97%E4%B8%80%E5%85%AC%E5%8F%B8%E7%AA%83%E7%94%B5%E7%B4%A2%E8%B5%941356%E4%B8%87%23&amp;t=31&amp;band_rank=40&amp;Refer=top" target="_blank">国网起诉湖南一公司窃电索赔1356万</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E5%9B%BD%E7%BD%91%E8%B5%B7%E8%AF%89%E6%B9%96%E5%8D%97%E4%B8%80%E5%85%AC%E5%8F%B8%E7%AA%83%E7%94%B5%E7%B4%A2%E8%B5%941356%E4%B8%87%23&amp;t=31&amp;band_rank=40&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">国网起诉湖南一公司窃电并索赔1356万元，用电数据异常被查出，窃电手法与企业法律责任成为关注点。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">22</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">天津13岁少年私卖家中黄金被法院判还</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">天津13岁少年私自将母亲黄金首饰卖给回收店，法院认定交易无效并判决商家返还，未成年人财产保护引关注。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696447079056998438/" target="_blank">92%在岗班主任不愿继续干了</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696447079056998438/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">调查显示92%的在岗班主任不愿继续担任班主任，非教学负担重、责任与待遇不匹配的问题再度成为教育焦点。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">23</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">天津一男子转移千万财产给第三者被判刑</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">天津一女子离婚时发现丈夫已将千万元财产转移给第三者，男方与第三者因重婚罪分别获刑，婚姻财产纠纷引热议。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696867493117378587/" target="_blank">78家加油站“偷油”被查</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696867493117378587/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">监管部门查处78家利用加油机作弊“偷油”的加油站，涉事企业被处罚，计量作弊与消费者权益保护受关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">24</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">天津4S店开新车上牌出事故 最终全额退款</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">天津市民购买新车后由4S店代办上牌途中发生事故，经媒体介入后4S店同意全额退款，消费者权益保护成焦点。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7697281287552172041/" target="_blank">盛艾敬父母欠薪：拿员工血汗钱铺星路</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7697281287552172041/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">女艺人盛艾敬父母被曝长期拖欠员工薪资，用欠款供养女儿出道，“拿血汗钱铺星路”引发全网声讨。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
+  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">25</td>
-  <td class="title" data-label="标题"><a href="https://www.qq.com/?&amp;q=lo5mc" target="_blank">江西一婚宴2599元一桌的菜品上错一半</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.qq.com/?&amp;q=lo5mc" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">江西一男子婚宴花费2599元一桌，上桌菜品却上错近一半，酒店违约与赔偿标准问题引发消费者权益讨论。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696430706403393578/" target="_blank">乡政府拖欠工程款5000万称无力偿还</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696430706403393578/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一乡政府被曝拖欠工程款5000万元并称“无力偿还”，施工方讨款艰难，基层政府债务与营商环境问题受关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">26</td>
-  <td class="title" data-label="标题"><a href="https://www.qq.com/?&amp;q=lo5mc" target="_blank">重庆网红“落地签”乱象被央视曝光</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.qq.com/?&amp;q=lo5mc" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">重庆网红“落地签”摩托载客乱象被央视曝光，乘客双手脱把、车辆蛇形穿行，交通安全与网红经济监管受关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A0532D00" target="_blank">上海市徐浦大桥主桥面发生交通事故，致1人死亡2人受伤</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A0532D00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">上海徐浦大桥主桥面发生交通事故，致1人死亡2人受伤，事故原因正在调查，大桥通行安全引发关注。</td>
+  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-ok">52条</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">27</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E5%90%83%E6%92%AD%E7%BD%91%E7%BA%A2%E5%B9%B2%E9%A5%AD%E8%8E%B9%E5%8E%BB%E4%B8%96&amp;t=31&amp;band_rank=1&amp;Refer=top" target="_blank">吃播网红干饭莹去世</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E5%90%83%E6%92%AD%E7%BD%91%E7%BA%A2%E5%B9%B2%E9%A5%AD%E8%8E%B9%E5%8E%BB%E4%B8%96&amp;t=31&amp;band_rank=1&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">吃播网红“干饭莹”去世消息登上热搜，网友对其生前健康状况与吃播行业透支问题展开讨论。</td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9ECEJB80550A0OW.html" target="_blank">蒙古国大火延烧中国边境疑与日本人钓鱼有关 细节披露</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9ECEJB80550A0OW.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">蒙古国草原大火延烧至中国边境，网传起火与外国人越境钓鱼有关，细节披露后边境防火与跨境生态安全问题受到关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">28</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E5%A5%B3%E5%AD%90%E9%AB%98%E9%93%81%E4%B8%8A%E5%92%8C%E7%94%B7%E5%8F%8B%E5%BC%80%E5%85%8D%E6%8F%90%E6%89%931%E5%B0%8F%E6%97%B6%E7%94%B5%E8%AF%9D%23&amp;t=31&amp;band_rank=2&amp;Refer=top" target="_blank">女子高铁上和男友开免提打1小时电话</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E5%A5%B3%E5%AD%90%E9%AB%98%E9%93%81%E4%B8%8A%E5%92%8C%E7%94%B7%E5%8F%8B%E5%BC%80%E5%85%8D%E6%8F%90%E6%89%931%E5%B0%8F%E6%97%B6%E7%94%B5%E8%AF%9D%23&amp;t=31&amp;band_rank=2&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">女子在高铁车厢内与男友开免提通话近一小时，影响其他乘客，公共空间礼仪与个人素质话题再引热议。</td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9EKOLSN0556AKU1.html" target="_blank">多个电视台真人主播清零，都换上了AI主播</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9EKOLSN0556AKU1.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">多家电视台真人主播岗位被AI主播全面替代，传统主持职业遭遇冲击，AI替代人工就业的边界再次引发讨论。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">29</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E7%9C%9F%E5%AE%9E%E5%A7%93%E5%90%8D%E8%A2%AB9%E5%B9%B4%E6%9C%AA%E8%81%94%E7%B3%BB%E5%8F%8B%E4%BA%BA%E7%94%A8%E4%BD%9C%E6%98%B5%E7%A7%B0%23&amp;t=31&amp;band_rank=5&amp;Refer=top" target="_blank">真实姓名被9年未联系友人用作昵称</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E7%9C%9F%E5%AE%9E%E5%A7%93%E5%90%8D%E8%A2%AB9%E5%B9%B4%E6%9C%AA%E8%81%94%E7%B3%BB%E5%8F%8B%E4%BA%BA%E7%94%A8%E4%BD%9C%E6%98%B5%E7%A7%B0%23&amp;t=31&amp;band_rank=5&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">网友发现多年未联系友人竟用自己的真实姓名作为社交平台昵称，身份信息被冒用风险引发广泛关注。</td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9CBSRGH05345ZH3.html" target="_blank">每次仅需1分钟，显著提升寿命！《柳叶刀·公共卫生》：被严重低估的长寿运动</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9CBSRGH05345ZH3.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">《柳叶刀·公共卫生》研究称每天一分钟的高强度间歇运动即可显著降低死亡风险，被低估的长寿运动引发健康科普讨论。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">30</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E8%80%81%E4%BA%BA%E5%87%8C%E6%99%A8%E4%B8%8B%E5%9C%B0%E5%B9%B2%E6%B4%BB%E8%A2%AB%E6%B0%94%E6%9E%AA%E5%87%BB%E4%B8%AD%E8%BA%AB%E4%BA%A1%23&amp;t=31&amp;band_rank=10&amp;Refer=top" target="_blank">老人凌晨下地干活被气枪击中身亡</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E8%80%81%E4%BA%BA%E5%87%8C%E6%99%A8%E4%B8%8B%E5%9C%B0%E5%B9%B2%E6%B4%BB%E8%A2%AB%E6%B0%94%E6%9E%AA%E5%87%BB%E4%B8%AD%E8%BA%AB%E4%BA%A1%23&amp;t=31&amp;band_rank=10&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">老人凌晨下地干活时遭气枪击中不幸身亡，农村公共安全与枪支管理问题引发网友强烈关注。</td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9EK3IHG053469LG.html" target="_blank">宁波一家天边砂锅焖面店已改鲜羊肉铺，西贝客服称原店已关闭</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9EK3IHG053469LG.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">宁波一家“天边砂锅”门店已改为鲜羊肉铺，西贝客服称原店已关闭，新店长否认与西贝、贾国龙有关，品牌授权乱象引关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
   <td class="seq" data-label="#">31</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E7%8E%8B%E6%98%9F%E8%A2%AB%E8%83%81%E8%BF%AB%E5%80%9F%E4%B8%8B%E7%9A%84%E7%BD%91%E8%B4%B7%E8%AF%A5%E4%B8%8D%E8%AF%A5%E8%BF%98&amp;t=31&amp;band_rank=16&amp;Refer=top" target="_blank">王星被胁迫借下的网贷该不该还</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E7%8E%8B%E6%98%9F%E8%A2%AB%E8%83%81%E8%BF%AB%E5%80%9F%E4%B8%8B%E7%9A%84%E7%BD%91%E8%B4%B7%E8%AF%A5%E4%B8%8D%E8%AF%A5%E8%BF%98&amp;t=31&amp;band_rank=16&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">演员王星称曾被胁迫借下网贷，网友热议被胁迫借贷是否应偿还，电诈后续与金融消费者权益成焦点。</td>
+  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L9CTC9FQ0519APGA.html" target="_blank">被通报“派系对立运转失灵” 内蒙古诗词学会乱象频发</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L9CTC9FQ0519APGA.html" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">内蒙古诗词学会被通报存在“派系对立、运转失灵”等问题，内部管理乱象频发，社会组织治理与监管问题受到关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">32</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%2333%E5%B2%81%E9%94%80%E5%86%A0%E7%A1%AE%E8%AF%8A%E8%83%83%E7%99%8C%E6%99%9A%E6%9C%9F%E7%AA%81%E7%84%B6%E8%A2%AB%E8%BE%9E%E9%80%80%23&amp;t=31&amp;band_rank=39&amp;Refer=top" target="_blank">33岁销冠确诊胃癌晚期突然被辞退</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%2333%E5%B2%81%E9%94%80%E5%86%A0%E7%A1%AE%E8%AF%8A%E8%83%83%E7%99%8C%E6%99%9A%E6%9C%9F%E7%AA%81%E7%84%B6%E8%A2%AB%E8%BE%9E%E9%80%80%23&amp;t=31&amp;band_rank=39&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">33岁销售冠军确诊胃癌晚期后突然被公司辞退，劳动者权益保障与重病员工职场生存问题引发热议。</td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261017A03DTM00" target="_blank">国家出手，养老账单要变了</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261017A03DTM00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">养老领域政策出现新调整，个人养老账单将随之变化，国家层面对养老服务与保障体系的规范动向引发关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">33</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E6%91%84%E5%BD%B1%E5%B8%88%E5%81%B7%E6%96%B0%E4%BA%BA%E7%A4%BC%E9%87%91%E8%A2%AB%E6%8A%93%E7%A7%B0%E8%B0%81%E7%9C%8B%E4%BA%86%E4%B8%8D%E7%9C%BC%E9%A6%8B%23&amp;t=31&amp;band_rank=47&amp;Refer=top" target="_blank">摄影师偷新人礼金被抓称谁看了不眼馋</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E6%91%84%E5%BD%B1%E5%B8%88%E5%81%B7%E6%96%B0%E4%BA%BA%E7%A4%BC%E9%87%91%E8%A2%AB%E6%8A%93%E7%A7%B0%E8%B0%81%E7%9C%8B%E4%BA%86%E4%B8%8D%E7%9C%BC%E9%A6%8B%23&amp;t=31&amp;band_rank=47&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">婚礼摄影师偷盗新人礼金被抓后称“谁看了不眼馋”，职业道德沦丧与婚庆行业信任危机引发讨论。</td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A08Y5A00" target="_blank">2026年全国“社保服务进万家”主场活动在青岛启动</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A08Y5A00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">2026年全国“社保服务进万家”活动在青岛启动，聚焦灵活就业人员、农民工等重点群体解读参保政策，推进精准扩面服务。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
+  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
   <td class="seq" data-label="#">34</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%2310%E5%B2%81%E5%A5%B3%E7%AB%A5%E8%A2%AB%E7%94%B7%E8%80%81%E5%B8%88%E6%91%B8%E8%84%B8%E5%AE%B6%E9%95%BF%E7%B4%A220%E4%B8%87%23&amp;t=31&amp;band_rank=49&amp;Refer=top" target="_blank">10岁女童被男老师摸脸家长索赔20万</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%2310%E5%B2%81%E5%A5%B3%E7%AB%A5%E8%A2%AB%E7%94%B7%E8%80%81%E5%B8%88%E6%91%B8%E8%84%B8%E5%AE%B6%E9%95%BF%E7%B4%A220%E4%B8%87%23&amp;t=31&amp;band_rank=49&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">10岁女童称被男老师摸脸，家长索赔20万元，校园安全、师生关系边界与维权尺度成为舆论焦点。</td>
+  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261012A02ESZ00" target="_blank">今年上半年全国卫生健康支出1.22万亿元，增长10.8%</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261012A02ESZ00" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">财政部报告显示上半年全国卫生健康支出1.22万亿元、增长10.8%，主要用于育儿补贴发放与医保基金补助，民生投入持续加码。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">35</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E7%94%B7%E5%8F%8B%E9%80%81%E5%90%B9%E9%A3%8E%E6%9C%BA%E5%90%8E%E4%B8%8D%E8%AE%A9%E5%A5%B3%E5%8F%8B%E5%B8%A6%E5%9B%9E%E5%AE%B6&amp;t=31&amp;band_rank=19&amp;Refer=top" target="_blank">男友送吹风机后不让女友带回家</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E7%94%B7%E5%8F%8B%E9%80%81%E5%90%B9%E9%A3%8E%E6%9C%BA%E5%90%8E%E4%B8%8D%E8%AE%A9%E5%A5%B3%E5%8F%8B%E5%B8%A6%E5%9B%9E%E5%AE%B6&amp;t=31&amp;band_rank=19&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">男友赠送吹风机后却不让女友带回家，恋爱中礼物归属与情感控制话题引发网友热议。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E7%9A%AE%E8%82%A4%E7%A7%91%E5%8C%BB%E7%94%9F%E5%BB%BA%E8%AE%AE%E4%BD%8F%E9%85%92%E5%BA%97%E8%87%AA%E5%B8%A64%E6%A0%B7%E4%B8%9C%E8%A5%BF%23&amp;t=31&amp;band_rank=4&amp;Refer=top" target="_blank">皮肤科医生建议住酒店自带4样东西</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E7%9A%AE%E8%82%A4%E7%A7%91%E5%8C%BB%E7%94%9F%E5%BB%BA%E8%AE%AE%E4%BD%8F%E9%85%92%E5%BA%97%E8%87%AA%E5%B8%A64%E6%A0%B7%E4%B8%9C%E8%A5%BF%23&amp;t=31&amp;band_rank=4&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">皮肤科医生建议住酒店自带毛巾、拖鞋、睡衣和消毒用品，以降低皮肤感染风险，酒店卫生话题再次引发热议。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">36</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E7%BA%A2%E6%9E%9C%E7%9F%AD%E5%89%A7%E9%99%8D%E6%99%BA%23&amp;t=31&amp;band_rank=6&amp;Refer=top" target="_blank">红果短剧降智</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E7%BA%A2%E6%9E%9C%E7%9F%AD%E5%89%A7%E9%99%8D%E6%99%BA%23&amp;t=31&amp;band_rank=6&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">红果短剧被吐槽内容降智、套路重复，短视频平台内容质量与观众审美疲劳话题引发广泛讨论。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E8%80%83%E4%B8%8A211%E5%90%8E%E8%BE%9E%E8%81%8C%E5%81%9A%E5%92%96%E5%95%A1%E5%BA%97%E5%BA%97%E5%91%98&amp;t=31&amp;band_rank=35&amp;Refer=top" target="_blank">考上211后辞职做咖啡店店员</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E8%80%83%E4%B8%8A211%E5%90%8E%E8%BE%9E%E8%81%8C%E5%81%9A%E5%92%96%E5%95%A1%E5%BA%97%E5%BA%97%E5%91%98&amp;t=31&amp;band_rank=35&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一名211高校毕业生辞去工作转做咖啡店店员，学历与职业选择的关系、就业观念转变引发广泛讨论。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">37</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E7%9B%AE%E5%87%BB%E8%80%85%E5%9B%9E%E5%BA%94%E5%A5%B3%E5%AD%90%E9%AB%98%E9%93%81%E5%85%8D%E6%8F%90%E6%89%931%E5%B0%8F%E6%97%B6%E7%94%B5%E8%AF%9D%23&amp;t=31&amp;band_rank=40&amp;Refer=top" target="_blank">目击者回应女子高铁免提打1小时电话</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E7%9B%AE%E5%87%BB%E8%80%85%E5%9B%9E%E5%BA%94%E5%A5%B3%E5%AD%90%E9%AB%98%E9%93%81%E5%85%8D%E6%8F%90%E6%89%931%E5%B0%8F%E6%97%B6%E7%94%B5%E8%AF%9D%23&amp;t=31&amp;band_rank=40&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">目击者回应高铁女子免提通话一小时事件，车厢内公共空间使用权与乘客素质问题持续发酵。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E4%B8%AD%E5%9B%BD%E7%95%99%E5%AD%A6%E7%94%9F%E5%B0%B1%E8%BA%AB%E6%8A%AB%E6%97%AD%E6%97%A5%E6%97%97%E9%81%93%E6%AD%89&amp;t=31&amp;band_rank=15&amp;Refer=top" target="_blank">中国留学生就身披旭日旗道歉</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E4%B8%AD%E5%9B%BD%E7%95%99%E5%AD%A6%E7%94%9F%E5%B0%B1%E8%BA%AB%E6%8A%AB%E6%97%AD%E6%97%A5%E6%97%97%E9%81%93%E6%AD%89&amp;t=31&amp;band_rank=15&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一名中国留学生因身披旭日旗拍照引发争议后公开道歉，青年历史认知与相关教育话题受到关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">38</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695729820475555894/" target="_blank">王星被胁迫借下的网贷该不该还</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695729820475555894/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">演员王星称在胁迫下借下网贷，事件引发关于被胁迫借贷法律效力与还款责任的广泛讨论。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E6%97%A5%E6%9C%AC%E5%8D%95%E6%AC%A1%E7%AD%BE%E8%AF%81%E7%8E%B0%E5%9C%A8900%E5%A4%9A&amp;t=31&amp;band_rank=48&amp;Refer=top" target="_blank">日本单次签证现在900多</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E6%97%A5%E6%9C%AC%E5%8D%95%E6%AC%A1%E7%AD%BE%E8%AF%81%E7%8E%B0%E5%9C%A8900%E5%A4%9A&amp;t=31&amp;band_rank=48&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">日本单次旅游签证代办价格涨至900多元，出境游成本上升，签证市场供需变化成为出行消费话题。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">39</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696059595917230118/" target="_blank">老人下地干活被气枪击中身亡</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696059595917230118/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">老人在田间劳作时遭气枪击中不幸身亡，农村公共安全、枪支管控与赔偿问题引发社会关注。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696880212247887935/" target="_blank">妈妈将大一儿子生活费从4000降至2000</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696880212247887935/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一位妈妈将大一儿子的月生活费从4000元降到2000元，大学生生活费标准与消费观念的代际差异引发讨论。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">40</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695955690120691750/" target="_blank">男群演疑似猥亵女演员 剧组回应</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695955690120691750/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">剧组男群演被曝疑似猥亵女演员，剧组方面作出回应，影视行业职场安全与维权机制成为焦点。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7697466020486712842/" target="_blank">上海一货车与5车碰撞致1死2伤</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7697466020486712842/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">上海一货车与5辆车发生碰撞，事故致1人死亡2人受伤，具体原因尚在调查，货车通行安全再度引发讨论。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">41</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696108126894194715/" target="_blank">送1.9元汽水患者连续投诉医生2年</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696108126894194715/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">患者因赠送1.9元汽水被药房人员收下后持续投诉两年，医患信任与举报边界话题引发热议。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696392996681515027/" target="_blank">新疆喀什要投资5000万新建景区？假</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696392996681515027/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">网传“新疆喀什投资5000万元新建景区”被证实为谣言，官方辟谣并提醒公众勿信勿传不实投资信息。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">42</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696079564782751258/" target="_blank">男子在悬空寺做引体向上被立案</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696079564782751258/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">男子在悬空寺古建筑上做引体向上并发布视频，景区通报公安机关已立案调查，文物保护意识引关注。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7697461527120576550/" target="_blank">损伤血管的“元凶”藏在你吃的食物里</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7697461527120576550/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">医学科普指出高盐、高糖、反式脂肪等食物成分会损伤血管，长期摄入增加心脑血管疾病风险，饮食结构调整受关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">43</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695750672406495258/" target="_blank">人民日报评“双汇处罚到人”</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695750672406495258/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">人民日报评论双汇食品安全案件“处罚到人”，食品安全责任落实到个人引发公众对舌尖安全的关注。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7697462461879815743/" target="_blank">年轻人为超长蛋挞疯狂背后</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7697462461879815743/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">“超长蛋挞”成为年轻人排队打卡的新宠，网红食品的营销逻辑与消费心理背后机制受到分析关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">44</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696014004717273151/" target="_blank">缅北四大家族3个已被中国宣判</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696014004717273151/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">缅北四大家族中三家犯罪集团已被中国司法机关宣判，跨境电诈与黑恶势力打击力度引发广泛关注。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696778318105362470/" target="_blank">小车故意与大货车并排压速行驶被罚</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696778318105362470/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一小车司机故意与大货车并排行驶压速，被交警依法处罚，恶意别车等交通违法行为的危险性引发讨论。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
   <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">45</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7694979756118294582/" target="_blank">缅北四大家族覆灭时间线</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7694979756118294582/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">梳理缅北四大家族从兴起到覆灭的时间线，揭示跨境犯罪集团瓦解过程与地区安全形势变化。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696832385518714943/" target="_blank">杨开金任四川雷波县委副书记</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696832385518714943/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">杨开金出任四川雷波县委副书记，该县此前因“耻辱”合影事件受到舆论关注，人事调整进展引发关注。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-high">高价值</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
   <td class="seq" data-label="#">46</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L95IG0S6051492LM.html" target="_blank">男子独自徒步失联2年遗体找到 距他报平安位置仅1公里</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L95IG0S6051492LM.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">男子独自徒步失联两年后遗体被找到，位置距其最后报平安处仅约一公里，户外安全与救援效率引人深思。</td>
+  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E7%94%B7%E5%AD%90%E5%87%8C%E6%99%A8%E7%82%96%E9%B1%BC%E9%86%92%E6%9D%A5%E5%90%8E%E9%B1%BC%E5%B7%B2%E7%A2%B3%E5%8C%96%23&amp;t=31&amp;band_rank=39&amp;Refer=top" target="_blank">男子凌晨炖鱼醒来后鱼已碳化</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E7%94%B7%E5%AD%90%E5%87%8C%E6%99%A8%E7%82%96%E9%B1%BC%E9%86%92%E6%9D%A5%E5%90%8E%E9%B1%BC%E5%B7%B2%E7%A2%B3%E5%8C%96%23&amp;t=31&amp;band_rank=39&amp;Refer=top" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">一男子凌晨炖鱼时睡着，醒来发现鱼已烧成碳化，所幸未引发火灾，居家用火用电安全再度被提醒。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
+  <td class="value" data-label="价值"><span class="value-tag value-low">低价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 <tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
+  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
   <td class="seq" data-label="#">47</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3IS74200511DJHA.html" target="_blank">河南出台带薪休假新政：领导干部要带头休假</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3IS74200511DJHA.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">河南出台带薪休假新政，要求领导干部带头休假并推动全员应休尽休，政策落实与职工权益保障受关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
-  <td class="seq" data-label="#">48</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3H4K94205345ARG.html" target="_blank">紫牛头条｜江苏3岁罕见病女童完成冷冻卵巢手术</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3H4K94205345ARG.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">江苏3岁罕见病女童完成冷冻卵巢手术，母亲希望为女儿保留未来生育选择权，医学伦理与亲情牵动人心。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #e8312f; border-left-color: #e8312f; background: #fff1f0;">📰 网易新闻</td>
-  <td class="seq" data-label="#">49</td>
-  <td class="title" data-label="标题"><a href="https://m.163.com/news/article/L3FN3MOQ05129QAF.html" target="_blank">千万别用手拍，最近很多人家里有！深圳曾有一男子被迫摘除眼球</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://m.163.com/news/article/L3FN3MOQ05129QAF.html" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">深圳曾有人因拍打家中昆虫导致严重感染被迫摘除眼球，专家提醒近期虫害高发，家庭健康防护受关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">50</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">医院门口爱心餐暖人心</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">天津环湖医院门口有爱心人士设立免费餐点为患者家属提供热饭，善意与流量质疑并存，社会温情话题引关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">51</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261013A0DP1A00?adChannelId=news" target="_blank">女乘客在深圳机场花2元买到1粒散装布洛芬</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261013A0DP1A00?adChannelId=news" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">女乘客在深圳机场生理期肚子疼，花2元买到一粒散装布洛芬，网友纷纷点赞并建议全国推广。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">52</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261013A0DGHC00?adChannelId=news" target="_blank">浙江杭州长寿夫妻加起来195岁</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261013A0DGHC00?adChannelId=news" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">浙江杭州一对长寿夫妻年龄相加达195岁，老爷子称过好自己、不和别人比，健康长寿与积极心态引关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">53</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02SXS00?adChannelId=news" target="_blank">今起报名！2027国考有这些新变化</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02SXS00?adChannelId=news" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">2027年度国家公务员考试今日起开始报名，招录规模与报考条件出现新变化，考生关注度持续升温。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">54</td>
-  <td class="title" data-label="标题"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_8286aceb16987652" target="_blank">规则筑底线，信任聚人心</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_8286aceb16987652" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">人民日报评论文章以商铺租客逾期交租获房东体谅为例，探讨规则刚性与情感信任的兼容并济，引发社会共鸣。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">55</td>
-  <td class="title" data-label="标题"><a href="https://new.qq.com/rain/a/20261013A0AK5N00" target="_blank">社保服务进万家活动启动</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://new.qq.com/rain/a/20261013A0AK5N00" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">2026年“社保服务进万家”活动于10月14日启动，各地通过线上线下方式把社保政策送到群众家门口。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">56</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02R6X00" target="_blank">全国卫生与健康大会释放哪些新信号</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02R6X00" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">全国卫生与健康大会释放健康中国建设新信号，涉及医疗卫生体制改革、公共卫生体系完善等民生议题。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">57</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E5%A5%B3%E5%AD%906%E6%AF%AB%E7%B1%B3%E7%BB%93%E8%8A%82%E7%A1%AE%E8%AF%8A%E4%B9%B3%E8%85%BA%E7%99%8C%23&amp;t=31&amp;band_rank=7&amp;Refer=top" target="_blank">女子6毫米结节确诊乳腺癌</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E5%A5%B3%E5%AD%906%E6%AF%AB%E7%B1%B3%E7%BB%93%E8%8A%82%E7%A1%AE%E8%AF%8A%E4%B9%B3%E8%85%BA%E7%99%8C%23&amp;t=31&amp;band_rank=7&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">女子体检发现仅6毫米结节却确诊为乳腺癌，提醒公众重视早期筛查，健康科普话题引发关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">58</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E8%B6%85%E8%BF%8730%E5%B2%81%E6%9C%AA%E5%A9%9A%E4%B8%8D%E4%BB%A3%E8%A1%A8%E6%9C%89%E9%97%AE%E9%A2%98&amp;t=31&amp;band_rank=23&amp;Refer=top" target="_blank">超过30岁未婚不代表有问题</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E8%B6%85%E8%BF%8730%E5%B2%81%E6%9C%AA%E5%A9%9A%E4%B8%8D%E4%BB%A3%E8%A1%A8%E6%9C%89%E9%97%AE%E9%A2%98&amp;t=31&amp;band_rank=23&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">“超过30岁未婚不代表有问题”登上热搜，婚姻观念多元化与个人选择自由话题引发社会共鸣。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">59</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E4%B8%8A%E6%B5%B7%E5%9C%B0%E9%93%81&amp;t=31&amp;band_rank=24&amp;Refer=top" target="_blank">上海地铁</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E4%B8%8A%E6%B5%B7%E5%9C%B0%E9%93%81&amp;t=31&amp;band_rank=24&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">上海地铁相关话题登上热搜，涉及运营调整或乘车体验，城市公共交通服务再次成为市民关注焦点。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">60</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E5%BF%83%E6%A2%97%E8%84%91%E6%A2%97%E5%8F%91%E7%94%9F%E5%89%8D%E7%9A%84%E6%B1%82%E6%95%91%E4%BF%A1%E5%8F%B7%23&amp;t=31&amp;band_rank=25&amp;Refer=top" target="_blank">心梗脑梗发生前的求救信号</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E5%BF%83%E6%A2%97%E8%84%91%E6%A2%97%E5%8F%91%E7%94%9F%E5%89%8D%E7%9A%84%E6%B1%82%E6%95%91%E4%BF%A1%E5%8F%B7%23&amp;t=31&amp;band_rank=25&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">心梗脑梗发生前的求救信号登上热搜，医学专家科普早期症状，提高公众对心脑血管疾病的识别能力。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">61</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E5%9D%A6%E6%A1%91%E5%B0%BC%E4%BA%9A%E5%AD%90%E5%AD%90%E5%96%9D%E8%B1%86%E6%B5%86%E5%8D%8A%E5%B9%B4%E9%95%BF%E4%BD%93%E9%87%8D&amp;t=31&amp;band_rank=27&amp;Refer=top" target="_blank">坦桑尼亚孩子喝豆浆半年长体重</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E5%9D%A6%E6%A1%91%E5%B0%BC%E4%BA%9A%E5%AD%90%E5%AD%90%E5%96%9D%E8%B1%86%E6%B5%86%E5%8D%8A%E5%B9%B4%E9%95%BF%E4%BD%93%E9%87%8D&amp;t=31&amp;band_rank=27&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">中国援助项目让坦桑尼亚孩子喝上豆浆半年内体重增长，营养健康与国际援助话题引发关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">62</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=98%E5%B9%B4%E7%94%B7%E7%94%9F%E4%B8%8B%E7%8F%AD%E6%91%86%E6%91%8A%E5%BF%99%E5%88%B0%E8%B5%B7%E9%A3%9E&amp;t=31&amp;band_rank=33&amp;Refer=top" target="_blank">98年男生下班摆摊忙到起飞</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=98%E5%B9%B4%E7%94%B7%E7%94%9F%E4%B8%8B%E7%8F%AD%E6%91%86%E6%91%8A%E5%BF%99%E5%88%B0%E8%B5%B7%E9%A3%9E&amp;t=31&amp;band_rank=33&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">98年出生男生下班后摆摊创业忙得不可开交，年轻人副业热潮与多元谋生方式引发社会讨论。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">63</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E5%B9%B4%E8%BD%BB%E4%BA%BA%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%8D%E6%84%9F%E6%96%B0%E7%A7%91%E6%8A%80&amp;t=31&amp;band_rank=22&amp;Refer=top" target="_blank">年轻人为什么反感新科技</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E5%B9%B4%E8%BD%BB%E4%BA%BA%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%8D%E6%84%9F%E6%96%B0%E7%A7%91%E6%8A%80&amp;t=31&amp;band_rank=22&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">“年轻人为什么反感新科技”引发讨论，技术进步与用户体验、隐私焦虑之间的张力成为焦点。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">64</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%E5%90%8C%E4%BA%8B%E6%8A%8A%E4%B8%8A%E7%8F%AD%E8%A1%A5%E8%A7%89%E8%AF%B4%E6%88%90%E4%BD%8E%E8%A1%80%E7%B3%96&amp;t=31&amp;band_rank=31&amp;Refer=top" target="_blank">同事把上班补觉说成低血糖</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%E5%90%8C%E4%BA%8B%E6%8A%8A%E4%B8%8A%E7%8F%AD%E8%A1%A5%E8%A7%89%E8%AF%B4%E6%88%90%E4%BD%8E%E8%A1%80%E7%B3%96&amp;t=31&amp;band_rank=31&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">同事把上班补觉谎称低血糖被网友吐槽，职场摸鱼文化与年轻一代工作态度话题引发轻松讨论。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #ff8200; border-left-color: #ff8200; background: #fff8f0;">🔥 微博热搜</td>
-  <td class="seq" data-label="#">65</td>
-  <td class="title" data-label="标题"><a href="https://s.weibo.com/weibo?q=%23%E5%AE%B6%E6%9C%89%E5%84%BF%E5%A5%B3%E6%97%A9%E5%B0%B1%E6%95%99%E4%BA%86%E6%88%91%E4%BB%AC%E6%AD%A3%E7%A1%AE%E7%9A%84%E7%88%B1%E6%83%85%E8%A7%82%23&amp;t=31&amp;band_rank=26&amp;Refer=top" target="_blank">家有儿女早就教了我们正确的爱情观</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://s.weibo.com/weibo?q=%23%E5%AE%B6%E6%9C%89%E5%84%BF%E5%A5%B3%E6%97%A9%E5%B0%B1%E6%95%99%E4%BA%86%E6%88%91%E4%BB%AC%E6%AD%A3%E7%A1%AE%E7%9A%84%E7%88%B1%E6%83%85%E8%A7%82%23&amp;t=31&amp;band_rank=26&amp;Refer=top" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">《家有儿女》剧中爱情观被翻出讨论，经典影视剧对当代年轻人情感认知的影响引发怀旧共鸣。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">66</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695576352838762539/" target="_blank">大蛇盘踞厕所 消防出勤30多次终抓获</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695576352838762539/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">一条大蛇盘踞居民厕所，消防人员出勤三十余次终于抓获，城市人与自然共处及公共安全引发关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">67</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696098654720921131/" target="_blank">长期用电动牙刷牙龈萎缩出血？误区</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696098654720921131/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">长期使用电动牙刷是否会导致牙龈萎缩出血引发热议，口腔健康科普与正确刷牙方式成为关注焦点。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">68</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696102375278267942/" target="_blank">大闸蟹为何跌出“地板价”</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696102375278267942/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">今年大闸蟹市场价格大幅下跌至“地板价”，供需变化与消费降级背景下的农产品行情引发关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">69</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695405074008424511/" target="_blank">男生高考522分被调剂马术专业学钉蹄</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695405074008424511/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">男生高考522分被调剂到马术专业学习钉蹄，冷门专业就业前景与高考志愿填报话题引发讨论。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">70</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695746670344781875/" target="_blank">Z114次列车成候鸟老人迁徙核心通道</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695746670344781875/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">Z114次列车成为北方老人南下过冬的核心通道，候鸟式养老与铁路服务适老化改造引发关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">71</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695661082907692607/" target="_blank">为何会出现如此多大棚闲置</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695661082907692607/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">多地农村出现大量闲置大棚，农业设施投资与土地利用效率问题引发乡村振兴与产业发展讨论。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">72</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696049580320276522/" target="_blank">全国卫生与健康大会释放哪些新信号</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696049580320276522/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">全国卫生与健康大会释放健康中国建设新信号，涉及医疗改革、公共卫生体系完善等民生政策方向。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">73</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7695687148364611625/" target="_blank">越南试行对中国公民组团赴庆和省免签</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7695687148364611625/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">越南试行对中国公民组团赴庆和省免签，出境旅游便利化与边境人员往来政策引发旅游行业关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">74</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696242876186889770/" target="_blank">中国车在欧洲“重新开卷”了吗</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696242876186889770/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">中国新能源汽车在欧洲市场面临新挑战，“重新开卷”说法引发对出口贸易与产业竞争的讨论。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">75</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696022248137785353/" target="_blank">重温泸定桥91年前那场“飞夺”冲锋</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696022248137785353/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">重温红军飞夺泸定桥的历史壮举，纪念长征精神传承与爱国主义教育话题引发社会共鸣。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">76</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696188787294158889/" target="_blank">马达加斯加确诊4例鼠疫</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696188787294158889/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">马达加斯加确诊4例鼠疫病例，国际公共卫生动态与传染病防控信息受到国内读者关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-mid">中性</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">77</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261013A0CC1X00?adChannelId=news" target="_blank">张芳华：发布中央气象台时隔11年以来首个暴雨红色预警</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261013A0CC1X00?adChannelId=news" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">中央气象台发布时隔11年的暴雨红色预警，气象专家回顾决策压力，极端天气预警机制引发公众关注。</td>
+  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696828343375314963/" target="_blank">4名村民因违规焚烧秸秆等行为被查处</a></td>
+  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696828343375314963/" target="_blank">查看</a></td>
+  <td class="summary" data-label="概要">4名村民因违规焚烧秸秆等行为被依法查处，秸秆禁烧政策执行与农村环保治理再度被提及。</td>
   <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
   <td class="value" data-label="价值"><span class="value-tag value-low">低价值</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">78</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">津潍高铁天津段取得关键突破</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">津潍高铁天津枢纽胡家园双线特大桥完成转体作业，为全线建设奠定坚实基础，交通基建进展获关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-low">低价值</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #07c160; border-left-color: #07c160; background: #f0fff5;">💬 腾讯新闻</td>
-  <td class="seq" data-label="#">79</td>
-  <td class="title" data-label="标题"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">天津明年将新增一条高铁</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://news.qq.com/rain/a/20261014A02QT500" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">天津城市建设传来好消息，预计明年将再新增一条高铁线路，区域交通便利性有望进一步提升。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-low">低价值</span></td>
-</tr>
-<tr>
-  <td class="platform" data-label="平台" style="color: #f04142; border-left-color: #f04142; background: #fff5f5;">📺 今日头条</td>
-  <td class="seq" data-label="#">80</td>
-  <td class="title" data-label="标题"><a href="https://www.toutiao.com/trending/7696279425592246291/" target="_blank">中央气象台发布暴雨蓝色预警</a></td>
-  <td class="link-cell" data-label="链接"><a href="https://www.toutiao.com/trending/7696279425592246291/" target="_blank">查看</a></td>
-  <td class="summary" data-label="概要">中央气象台发布暴雨蓝色预警，多地将出现中到大雨，气象信息与防灾减灾提示受公众关注。</td>
-  <td class="comment-count" data-label="评论"><span class="cmt-badge cmt-na">无法获取</span></td>
-  <td class="value" data-label="价值"><span class="value-tag value-low">低价值</span></td>
+  <td class="report" data-label="评论报告"><span class="cmt-badge cmt-na">—</span></td>
 </tr>
 </tbody>
 </table>
@@ -946,6 +716,7 @@
   <p>中性：不符合高价值或低价值标准的其他新闻</p>
   <p style="margin-top:8px;">排序规则：先按价值度（高&rarr;中&rarr;低），同一价值度内按评论数量从高到低</p>
   <p style="margin-top:8px;">评论数量说明：网易新闻通过评论API获取；腾讯新闻评论需QQ登录认证无法获取；微博热搜评论需登录无法获取；今日头条通过页面静态内容获取部分</p>
+  <p style="margin-top:8px;">评论报告说明：仅对高价值新闻生成。网易/腾讯走评论区实采后按"四问框架"成文；微博需登录 Cookie、今日头条采集器暂不支持，故留空。评论来源已脱敏，不出现网名与省份。</p>
 </div>
 
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
